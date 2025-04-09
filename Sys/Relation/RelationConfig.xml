@@ -1,0 +1,16 @@
+﻿<RelationConfig>
+  <RelaItems>
+    <RelaItem Type="Flow" Name="请假审批" FormId="864" RelaFormIds="860 866 867 108" RelaDicts="EPMS_ProjectEntity OrganizationOfficial" />
+    <RelaItem Type="Dict" Name="部门"  DictCode="OrganizationOfficial" RelaFormIds="860 866 867 108" RelaDicts="EPMS_ProjectEntity OrganizationOfficial" />
+  </RelaItems>
+  <RelaDicts>
+    <RelaDict DictCode="EPMS_ProjectEntity" DictName="EPMS项目" ViewUrl="~/EPMS/List/Project/ProjectEditor.aspx" IdField="OrganizationID" NameField="ProjectName" CUserIdField="CreateUserId" CUserNameField="CreateUserName" CDateField="CreateDate" Sort="ProjectCode" Filter="Flag=1">
+      <OtherFields>
+        <RelaField Code="ProjectCode" Name="项目编号" />
+        <RelaField Code="ProjectType" Name="项目类型" />
+      </OtherFields>
+    </RelaDict>
+    <RelaDict DictCode="OrganizationOfficial" DictName="部门" ViewUrl="~/Sys/OrgUsers/OfficalEditor.aspx" IdField="OrgUnitId" NameField="OrgUnitName" CUserIdField="CreateUserId" CUserNameField="CreateUserName" CDateField="CreateDate" Sort="Sort" Filter="Flag=1 AND OrgUnitLevel=2">
+    </RelaDict>
+  </RelaDicts>
+</RelationConfig>

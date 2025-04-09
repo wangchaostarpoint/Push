@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="XFormEditor.Master.cs"
+    Inherits="Zhongsoft.Portal.BDM.UI.Master.XFormEditor" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="toolBar" runat="server">
+            <div id="templateTabs" style="height: 100%">
+                <ul>
+                    <li><a href='#data' id='adata'>元数据<img src="../../ui/images/next.gif" /></a></li>
+                    <li><a disabled='true' href='#xpdl' id='axpdl'>流程设计<img src="../../ui/images/next.gif" /></a></li>
+                    <li><a disabled='true' href='#form' id='aform'>表单设计<img src="../../ui/images/next.gif" /></a></li>
+                    <li><a disabled='true' href='#view' id='aview'>表单预览
+                        <img src="../../../Themes/Images/btn_finish.gif" /></a></li>
+                </ul>
+            </div>
+        </asp:ContentPlaceHolder>
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="editor" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

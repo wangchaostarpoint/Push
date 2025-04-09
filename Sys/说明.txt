@@ -1,0 +1,37 @@
+﻿/***  Sys 系统文件夹  ***/
+
+注意：凡是与其它系统共用的功能不用加Sys命名空间
+      如：General、Base
+
+
+-Base Portal级别基础类
+
+
+
+-General Portal级别
+
+命名空间：Zhongsoft.Portal
+2、应用程序通用功能
+
+
+
+-Sys 子系统级通用对象
+
+
+命名空间：Zhongsoft.Portal.Sys
+
+
+
+
+-Controls  UI通用控件
+
+命名空间：Zhongsoft.Portal.UI
+
+
+
+
+--流程变量命名
+
+PrcInstId
+ActInstId
+BlockInstId

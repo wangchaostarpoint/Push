@@ -1,0 +1,306 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectEditorNew.master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.ObjectEditorNew" %>
+
+<%@ Register Src="~/UI/Controls/SubToolBarNew.ascx" TagName="SubToolBarNew" TagPrefix="toolbar" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv = "X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title></title>
+    <base target="_self" />
+    <%--<link href="../../Themes/styles/objecteditor.css" rel="stylesheet" type="text/css" />--%>
+    <link href="../../Themes/custom/styles/global.css" rel="stylesheet" type="text/css" />
+    <link href="../../Themes/custom/styles/layout.css" rel="stylesheet" type="text/css" />
+    <link href="../../Themes/custom/styles/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+        }
+        .subtoolbarbg1
+        {
+            height: 76px;
+            display: inline-block;
+            background: url(../images/subtoolbartdbg.jpg) right center no-repeat;
+            padding-left: 8px;
+            padding-right: 10px;
+            font-size: 12px;
+            float: left;
+        }
+        
+        /*合同详细页面tabs样式*/
+        .tabs-title{ position:absolute; top:0px; z-index:5;left:20px; display:block;padding-top:14px;  width:90%; height:23px;}
+        .tabs-title li{ display:block; top:0px;  width:71px; border-top:#B6B9BE 1px solid;border-left:#B6B9BE 1px solid; border-right:#B6B9BE 1px solid; margin-left:2px; border-bottom: #fff 1px solid;}
+        .tabs-title a{border-bottom: #fff 1px solid!important; color:#fff; font-weight:bold; display:block!important; padding:0px 15px; line-height:22px;}
+        .tabs-title a:hover
+        {
+            color: #dd0208;
+        }
+        .tabs-title a.tabs-tlink
+        {
+            color: #dd0208;
+            font-weight: bold;
+            border-bottom: #fff 1px solid;
+            background: #fff;
+            display:block;
+        }
+        .tabs-content
+        {  
+            height: 69px;
+            background: url(../../../Themes/custom/images/toplj.jpg) bottom repeat-x!important;
+        }
+        .ctl00_relatedTree_1{ background:#22949f!important; padding-left:5px; padding-right:5px; }
+        #ctl00_relatedTree{ margin-top:-20px; margin-left:-8px;}
+     
+       .tz-detail-header{ padding-top:37px; height:49px; }/*0107修改台帐新建弹出页面图片与文字显示在一行，将height:69px改为49*/
+    </style>
+</head>
+<body style="background:#fff; overflow:hidden;">
+    <form id="form1" runat="server">
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td colspan="2">
+                            <div class="tz-detail-header">
+                                <div class="tabs-title">
+                                    <ul id="tabs">
+                                        <li><a  class="tabs-tlink">功能区</a></li> 
+                                    </ul>
+                                </div>
+                                
+                                <div id="divToolBtn" class="tabs-content" runat="server">
+                                    <div id="divConfigBar" style="float: left;">
+                                        <toolbar:SubToolBarNew ID="toolBar" runat="server" />
+                                    </div>
+                                    <div id="divCustomBar" style="float: left;  ">
+                                        <!-- 定制功能按钮-->
+                                        <asp:ContentPlaceHolder ID="toolBtn" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                    <div id="divSystemBar" runat="server" visible="false" style="float: left;margin-top:5px; margin-left:5px;">
+                                        <asp:LinkButton runat="server" ID="btnConfig" EnableTheming="false" CssClass="subtoolbarlink"><span>
+                                    <img  title="字典配置" src="<%=BizPage.WebAppPath %>/Themes/Images/btn-cfg.gif" width="15" height="15" /></span>
+                                        </asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td runat="server" id="tdRelated" style="vertical-align: top;">
+                            <div class="editor-left" style="height: 100%">
+                                <div class="editor-leftmenut">
+                                    <asp:LinkButton runat="server" ID="lbtnBaseInfo" OnClick="lbtnBaseInfo_Click" EnableTheming="false"><span>
+                            <img src="<%=BizPage.WebAppPath %>/themes/custom/images/ico/leftt.gif" /><%=this.Page.Title %></span> 
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="editor-leftmenut">
+                                    <span>
+                                        <img src="<%=BizPage.WebAppPath %>/themes/custom/images/ico/leftt.gif" />关联信息</span>
+                                </div>
+                                <div class="editor-leftmenub" style="color:#fff;">
+                                    <asp:TreeView runat="server" ID="relatedTree" OnSelectedNodeChanged="relatedTree_SelectedNodeChanged">
+                                    </asp:TreeView>
+                                </div>
+                            </div>
+                        </td>
+                        <td id="tdEditor" valign="top">
+                            <div class="editor-right-header" runat="server" id="divRightTitle">
+                                <asp:Label runat="server" ID="lbRelation"></asp:Label>
+                            </div>
+                            <div class="editor-right" runat="server" id="divEditor">
+                                <div id="editor-content" style="width: 100%;  height: inherit">
+                                    <div style=" margin-bottom:10px;">
+                                    <asp:ContentPlaceHolder ID="BusinessObjectHolder" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editor-right" runat="server" id="divRelation" visible="false" style="border-top: #C0C3C8 1px solid;
+                                margin-top: 4px;">
+                                <iframe runat="server" id="relationSpace" frameborder="0" width="100%" height="100%">
+                                </iframe>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height: 5px;">
+            <td>
+            </td>
+        </tr>
+    </table>
+    <div id="saveSuccess" style="display: none" class="ui-state-highlight ui-corner-all">
+        <p>
+            <span class="ui-icon ui-icon-info" style="float: left;"></span>保存成功!</p>
+    </div>
+    <div class="ui-widget">
+        <div id="saveFailed" style="display: none" class="ui-state-error ui-corner-all">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                保存失败!
+            </p>
+        </div>
+    </div>
+    <script type="text/javascript" language="javascript">
+        function configDict(bizId) {
+            var url = buildBizUrl("3", bizId, "bdm/list/DictEditor.aspx", null);
+            showModal(url, null, 1080, 600);
+            return true;
+        }
+
+        function saveData() {
+            if (!checkReqField()) {
+                return false;
+            }
+            if (typeof (checkForm) == 'function') {
+                if (!checkForm()) return false;
+            }
+
+            if ("<%=actionType %>" == "Create"
+            || "<%=actionType %>" == "Update"
+            || "<%=actionType %>" == "Control"
+            || "<%=actionType %>" == "Delete") {
+                if (parent.returnValue == undefined || parent.returnValue == null) {
+                    parent.returnValue = "Saved";
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function closeSaveData() {
+            if ("<%=actionType %>" == "Create" || "<%=actionType %>" == "Update") {
+                if (!confirm('是否保存再关闭？')) {
+                    closeWindow();
+                    return false;
+                }
+                else {
+                    return saveData();
+                }
+            }
+            //查看状态下直接关闭
+            else {
+                closeWindow();
+                return false;
+            }
+        }
+
+        function deleteData() {
+            if (!window.confirm("您确定删除吗？")) return false;
+            if (parent.returnValue == undefined || parent.returnValue == null) {
+                parent.returnValue = "Deleted";
+            }
+            return true;
+        }
+        function printPage() {
+            if (typeof (beforePrint) == "function") {//打印前的处理，如果是需要单独做打印页面，可在BeforePrint方法中完成
+                if (!beforePrint())
+                    return false;
+            }
+            window.open(buildQueryUrl("Sys/Workflow/PrintPageDetail.aspx", null));
+        }
+
+        function initFormPlugin() {
+            $('#saveSuccess').dialog({
+                autoOpen: false,
+                resizable: false,
+                minHeight: '50',
+                hide: 'blind',
+                closeText: '',
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveSuccess').dialog("isOpen")) {
+                            $('#saveSuccess').dialog('close');
+                        }
+                    }, 2000);
+                }
+            });
+            $('#saveFailed').dialog({
+                autoOpen: false,
+                minHeight: '50',
+                hide: 'blind',
+                resizable: false,
+                modal: true,
+                closeText: '',
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveFailed').dialog("isOpen")) {
+                            $('#saveFailed').dialog('close');
+                        }
+                    }, 2000);
+                }
+            });
+            if (typeof $actionResult != "undefined") {
+                if ($actionResult.r != -999) {
+                    if ($actionResult.ErrCode == 0) $('#saveSuccess').dialog('open');
+                    else {
+                        $('<p>' + $actionResult.Msg + '</p>').appendTo($('#saveFailed'));
+                        $('#saveFailed').dialog('open');
+                    }
+                    $actionResult.r = -999;
+                }
+//                if ($actionResult.r == 1) $('#saveSuccess').dialog('open');
+//                else if ($actionResult.r == 0) {
+//                 $('<p>' + $actionResult.m + '</p>').appendTo($('#saveFailed'));
+//                   $('#saveFailed').dialog('open');
+//                 }
+//                 $actionResult.r = 3;
+
+            }
+            $('.tabs-title li a').click(function () {
+                var id = $(this).attr('href');
+                $(id).css('display', '').siblings('div').css('display', 'none');
+                $(this).addClass('tabs-tlink').parent('li').siblings('li').children('a').removeClass('tabs-tlink');
+            });
+
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+                //保持header样式，不做隐藏，对div内容清空，高度降低
+                $('#<%=divRightTitle.ClientID %>').text('');
+                $('#<%=divRightTitle.ClientID %>').height(0.1);
+            }
+
+            setSize();
+            if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+                document.body.onresize = setSize;
+            } else {
+                window.onresize = setSize;
+            }
+        }
+
+        //页面窗体大小变化时，更具窗体大小改变内容控件大小
+        function setSize() {
+
+            var rigththeader = $(".editor-right-header").height() + $(".tz-detail-header").height()+37; //右侧标题高度
+            if (rigththeader == null)
+                rigththeader = 0;
+
+            var widthpadding = 6; //统一与窗体边框间隔大小
+            var heightpadding = 23;
+            if ($('.editor-left').length == 0) {
+                $('.editor-right').height(($(window).height() - rigththeader - heightpadding) + 'px');
+                $('.editor-right').width(($(window).width()) + 'px');
+                $("#<%=relationSpace.ClientID %>").height($('.editor-right').height() + 'px');
+            }
+            else {
+                $('.editor-right').height(($(window).height() - rigththeader - heightpadding) + 'px');
+                $('.editor-right').width(($(window).width() - $('.editor-left').width()) + 'px');
+                $('.editor-left').height(($(".editor-right-header").height() + $('.editor-right').height()) + 'px');
+
+                $("#<%=relationSpace.ClientID %>").height($('.editor-right').height() + 'px');
+            }
+        }
+
+        function showTriggerWf() {
+            showModal(buildQueryUrl("Sys/Workflow/TriggerWorkflowInfo.aspx", { bizId: $bizCtx.bizId, DictCode: "<%=BizPage.DictCode %>" }), "", 450, 300)
+        }
+    </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,32 @@
+I hope you love Font Awesome. If you've found it useful, please do me a favor and check out my latest project,
+Fort Awesome (https://fortawesome.com). It makes it easy to put the perfect icons on your website. Choose from our awesome,
+comprehensive icon sets or copy and paste your own.
+
+Please. Check it out.
+
+-Dave Gandy
+
+
+
+整体框架版本
+
+Demo整体风格：淡蓝色
+
+项目：
+收费
+专业节点、资料节点
+甘特图
+生产进度、收款进度
+目标：实用
+
+
+经营：
+当年已签、当年已收等空间布局紧凑
+重点客户：应收，去掉已收；项目投诉标记；待开发项目
+重点合同：合同、已收、增加应收；生产进度
+公司近一年到款分析：计划、实际对比
+计划有没有如实执行？
+
+合同：增加收款进度、和生产计划能够进行对应
+
+和贵州水电沟通经营合同管理人员

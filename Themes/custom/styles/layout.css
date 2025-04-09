@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*台账页面header样式*/
+.tz-header{width:100%; height:130px; background:url(../images/headerbg.jpg) right top no-repeat; border-bottom:#BEC3C7 1px solid;}
+/*台账详细页面布局样式*/
+.tz-detail-header{ width:100%; height:106px; background:url(../images/tbg.png) top right no-repeat; border-bottom:#B2B9C1 1px solid; margin-bottom:3px; }
+.editor-left{ width:146px;  margin-top:0px; background:#425671;vertical-align:top; border-top:#4b4e5b 1px solid;
+border-right:#4b4e5b 1px solid;border-bottom:#4b4e5b 1px solid;}
+.editor-right{margin-top:1px;  overflow:auto; border-left:#fff 1px solid;border-bottom:#BFC2C9 1px solid;  }
+
+.editor-leftmenut{  height:22px; line-height:22px; padding-top:10px; font-weight:bold; color:#fff!important;}
+.editor-leftmenut a{ color:#fff;}
+.editor-leftmenut a:hover{ color:#fff;}
+.editor-leftmenut img{ padding:0px 7px 0px 15px;}
+.editor-leftmenub{padding:20px 12px 20px 25px;}
+.editor-leftmenub a{ color:#cfcfcf;}
+.editor-leftmenub a:hover{ color:#fff;}
+.editor-leftmenub span{ display:block; width:90px; height:25px; line-height:25px;padding-left:6px;}
+
+.leftmenuclick{ background:#A7CDF1;color:#000000; display:block;width:90px; height:25px; line-height:25px;}
+/*.tz-detail-right-header{ height:30px; font-weight:bold;border-bottom:#5ca0c6 1px solid; color:#fff; line-height:30px; padding-left:12px; background:#5ca0c6;}*/
+.editor-right-header{eight:30px; font-size:14px; font-weight:bold; color:#fff; line-height:30px; 
+                     padding-left:12px; font-family:"微软雅黑"!important; background:#22949f; border:#fff 1px solid; border-top:none!important;}
+
+/*详细页面顶部标识：业务周期business-cycle、操作operation*/
+.business-cycle{text-align:center; line-height:20px;  font-family:"微软雅黑";}
+.operation{text-align:center;border-left:#d5d6d9 1px solid; line-height:20px; font-family:"微软雅黑";}

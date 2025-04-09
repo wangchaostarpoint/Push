@@ -1,0 +1,211 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectPrint.Master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.PrintPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style media="print">
+        .noprint
+        {
+            display: none;
+        }
+    </style>
+    <style type="text/css">
+        /*标题      */
+        
+        .kpms-print-maintitle
+        {
+            width: 684.0pt;
+            border: none;
+            font-size: 26.0pt;
+            font-family: 隶书;
+            text-align: center;
+            line-height: 28.0pt;
+            height: 40px;
+        }
+        .kpms-print-sectitle
+        {
+            width: 684.0pt;
+            border: none;
+            font-size: 9.0pt;
+            font-family: 宋体;
+        }
+        
+        .kpms-print-sectitle td
+        {
+            border: none;
+            text-align: left;
+        }
+        
+        .kpms-print-pdname
+        {
+            line-height: 20.0pt;
+            font-size: 12.0pt;
+            border: none;
+            text-align: left;
+            font-family: 宋体;
+            font-style: oblique;
+            width: 48%;
+        }
+        
+        .kpms-print-signdiv
+        {
+            font-size: 10.0pt;
+            font-family: 宋体;
+        }
+        
+        .kpms-print-signtd
+        {
+            height: 40px;
+        }
+        
+        /*外部表格内容*/
+        .kpms-table-container
+        {
+            width: 684.0pt;
+            border: #000000 1px solid;
+            border-collapse: collapse;
+        }
+        
+        .kpms-table-container td
+        {
+            border: none;
+            height: 25px;
+            border-collapse: collapse;
+        }
+        
+        /*内部表格*/
+        .kpms-table-inner
+        {
+            width: 100%;
+            border: none;
+            line-height: 14px;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        
+        .kpms-table-inner td
+        {
+            padding-left: 5px;
+            height: 25px;
+            text-align: center;
+            line-height: 14px;
+            border: #000000 1px solid;
+            border-collapse: collapse;
+        }
+        
+        /**/
+        .kpms-table-print
+        {
+            width: 684.0pt;
+            border: none;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        
+        .kpms-table-print td
+        {
+            padding-left: 5px;
+            height: 25px;
+            text-align: center;
+            line-height: 14px;
+            border: #000000 1px solid;
+            border-collapse: collapse;
+        }
+        
+        .kpms-td-Title
+        {
+            font-size: large;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body onload='printSetBase()'>
+    <form id="form1" runat="server">
+    <object id="factory" viewastext style="display: none;" classid="clsid:1663ed61-23eb-11d2-b92f-008048fdd814"
+        codebase="<%=WebApplicationPath %>/Sys/Download/scriptx.cab#Version=6,6,440,20">
+    </object>
+    <input type="button" name="noPrint" id="button_print" value="打印" onclick="printNow()"
+        class="noprint" />
+    <input type="button" name="notPrint" id="button_show" value="打印预览" onclick="printView();"
+        class="noprint" />
+    <a id="showReg" target="_blank" href="<%=WebApplicationPath %>/Sys/Download/打印插件注册表修改.reg"
+        class="noprint" style="color: Blue; text-decoration: underline;">无法安装打印插件用户点此下载文件，运行文件后请关闭所有IE窗口再重新打开。</a>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPrint" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <script defer>
+        function printSetBase() {
+            var factory = document.getElementById("factory");
+            if (factory.printing != undefined) {
+                $("#showReg").hide();
+            }
+            else {
+                $("#button_print").hide();
+                $("#button_show").hide();
+                return;
+            }
+            factory.printing.header = "";        //页眉
+            factory.printing.footer = "";        //页脚
+            if (typeof (printOrientation) == 'function') {
+                factory.printing.portrait = printOrientation();
+            }
+            else {
+                factory.printing.portrait = false;   //true为纵向打印，false为横向打印
+            }
+            if (typeof (printMargin) == 'function') {
+                var margins = printMargin().split(',')
+                factory.printing.leftMargin = margins[0];
+                factory.printing.topMargin = margins[1];
+                factory.printing.rightMargin = margins[2];
+                factory.printing.bottomMargin = margins[3];
+            }
+            else {
+                factory.printing.leftMargin = 30;
+                factory.printing.topMargin = 20;
+                factory.printing.rightMargin = 20;
+                factory.printing.bottomMargin = 15;
+            }
+        }
+
+        function printNow() {
+            //打印前可执行方法
+            if (typeof (setControlsBeforPrint) == 'function') {
+                setControlsBeforPrint();
+            }
+            document.getElementById("factory").printing.Print(false);
+            //打印后可执行方法
+            if (typeof (setControlsAfterPrint) == 'function') {
+                setControlsAfterPrint();
+            }
+        }
+
+        function printSetting() {
+            document.getElementById("factory").printing.PageSetup();
+        }
+
+        function printView() {
+            //打印预览前可执行方法
+            if (typeof (setControlsBeforPrint) == 'function') {
+                setControlsBeforPrint();
+            }
+            document.getElementById("factory").printing.Preview();
+            //打印预览后可执行方法
+            if (typeof (setControlsAfterPrint) == 'function') {
+                setControlsAfterPrint();
+            }
+        }
+
+        function initFormPlugin() {
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+            }
+        } 
+    
+    </script>
+</body>
+</html>

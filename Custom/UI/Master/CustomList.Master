@@ -1,0 +1,494 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CustomList.master.cs"
+    Inherits="Zhongsoft.Portal.BDM.UI.Master.CustomList" %>
+
+<%@ Register Src="~/UI/Controls/SubToolBar.ascx" TagName="SubToolBar" TagPrefix="toolbar" %>
+<%@ Import Namespace="Zhongsoft.Portal.Custom" %>
+<%@ Import Namespace="Zhongsoft.Portal.BDM" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title></title>
+    <base target="_self" />
+    <link href="../../../Themes/Styles/easyui.css" type="text/css" rel="Stylesheet" />
+    <link href="../../../Themes/Styles/objectlist.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Themes/Styles/objfilter.css" type="text/css" rel="Stylesheet" />
+    <style>
+        .hidepager
+        {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <% 
+        //仪表板隐藏模板页工具条
+        if (BPage.ShowToolbar == "0")
+        {
+    %>
+    <style>
+        #trleader
+        {
+            display: none;
+        }
+        #divToolBtn
+        {
+            display: none;
+        }
+    </style>
+    <%
+        } //仪表板隐藏模板页工具条-end
+    %>
+    <form id="form1" runat="server" defaultbutton="btnQuery">
+    <script src="<%=BPage.WebAppPath %>/UI/Script/customer.list.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        if (parseBool("<%=BPage.IsDashboard %>"))//如果是dashboad部件，则页面加载完成隐藏dashboad页面的加载遮罩层
+        {
+            $(window).ready(function () { $('#divload_' + self.frameElement.id, window.parent.document).hide(); });
+        }
+
+        var isCustom = parseBool("<%=BPage.IsCustom %>") ? "1" : "0";
+        var canFrozen = parseBool("<%=BPage.CanFrozen %>") ? "1" : "0";
+
+        function DetailOfView(actionType) {
+            var url = "";
+            if (actionType == "2") {
+                if (!parseBool("<%=BPage.HasBaseView %>")) {
+                    if (!parseBool("<%=BPage.KPMSUser.IsAdmin %>")) {
+                        alert("没有基础视图的定义，不能新建子视图。");
+                        return false;
+                    }
+                    url = "../../Custom/List/ListEditor.aspx?actionType=2&PageNamespace=<%=BPage.PageNamespace%>&ListId=<%=BPage.ListId %>&IsCustom=" + isCustom + "&IsBaseView=1&CanFrozen=" + canFrozen;
+                }
+                else {
+                    url = "../../Custom/List/ListEditor.aspx?actionType=2&PageNamespace=<%=BPage.PageNamespace%>&ListId=<%=BPage.ListId %>&IsCustom=" + isCustom + "&IsBaseView=0&CanFrozen=" + canFrozen;
+                }
+            }
+            else if (actionType == "3") {
+
+                if ($("#<%=ddlView.ClientID %>").val() == null || $("#<%=ddlView.ClientID %>").val() == "") {
+                    return false;
+                }
+                if (!parseBool("<%=BPage.HasEditPerm %>")) {
+                    alert("你没有编辑此视图的权限。");
+                    return false;
+                }
+                var bizId = $("#<%=ddlView.ClientID %>").val();
+                var isBase = $("#<%=ddlView.ClientID %>").val() == "<%=BPage.BaseViewId %>" ? "1" : "0";
+                url = "../../Custom/List/ListEditor.aspx?actionType=3&PageNamespace=<%=BPage.PageNamespace%>&ListId=<%=BPage.ListId %>&IsCustom=" + isCustom + "&IsBaseView=" + isBase + "&bizId=" + bizId + "&CanFrozen=" + canFrozen;
+            }
+            else if (actionType == "4") {
+                if ($("#<%=ddlView.ClientID %>").val() == null || $("#<%=ddlView.ClientID %>").val() == "") {
+                    return false;
+                }
+                if (!parseBool("<%=BPage.HasEditPerm %>")) {
+                    alert("你没有删除此视图的权限。");
+                    return false;
+                }
+                if ($("#<%=ddlView.ClientID %>").val() == "<%=BPage.BaseViewId %>") {
+                    return confirm("删除基础视图会一同删除其子视图，确认删除？");
+                }
+                return confirm("确认删除？");
+            }
+
+            if (showModal(encodeURI(url), null, 1100, 700) == undefined) {
+                return false;
+            }
+            return true;
+        }
+        
+    </script>
+    <table class="tz-table" border="0">
+        <tr id="trToolbar">
+            <td>
+                <table class="tz-table">
+                    <tr id="trleader" class="list-leader">
+                        <td class="list-title" id="tdTitle">
+                            <table>
+                                <tr>
+                                    <td id="tdPageTitle">
+                                        <%=this.Page.Title %>
+                                    </td>
+                                    <td>
+                                        <asp:DropDownList Width="150px" ID="ddlView" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlView_SelectedIndexChanged"
+                                            EnableTheming="false">
+                                        </asp:DropDownList>
+                                    </td>
+                                    <td style="font-weight: normal">
+                                        <span class="menu-div" menu="#editor">
+                                            <asp:LinkButton runat="server" class="kpms-btn" ID="btnManage" OnClientClick="return false;">
+                            <span>视图管理<img src="../../Themes/Images/fleximages/ddn.png" /></span></asp:LinkButton>
+                                            <div class="btn-menu" id="editor" style="width: 60px; display: none;">
+                                                <div class="menu-item">
+                                                    <asp:LinkButton ID="btnCustomView" runat="server" OnClientClick="return DetailOfView(2);"
+                                                        EnableTheming="false" OnClick="btnCustomView_Click">
+                                    <div class="menu-icon icon-new">
+                                    </div>
+                                    <div class="menu-text">
+                                        新建</div></asp:LinkButton>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <asp:LinkButton runat="server" ID="btnEditView" OnClientClick="return DetailOfView(3);"
+                                                        EnableTheming="false" OnClick="btnEditView_Click">
+                                                         <div class="menu-icon icon-editor">
+                                    </div>
+                                    <div class="menu-text">
+                                        编辑</div>
+                                                    </asp:LinkButton>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <asp:LinkButton runat="server" ID="btnDeleteView" OnClientClick="return DetailOfView(4);"
+                                                        EnableTheming="false" OnClick="btnDeleteView_Click">
+                                                          <div class="menu-icon icon-delete">
+                                    </div>
+                                    <div class="menu-text">
+                                        删除</div>
+                                                    </asp:LinkButton>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <asp:LinkButton runat="server" ID="btnSetDefault" EnableTheming="false" OnClientClick="return confirm('确定设置此视图为默认视图？')">
+                                                          <div class="menu-icon icon-default">
+                                    </div>
+                                    <div class="menu-text">
+                                        默认</div>
+                                                    </asp:LinkButton>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="right">
+                            <table>
+                                <tr>
+                                    <td>
+                                        关键字
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="tbKeyword" runat="server" MaxLength="20" Width="130px"></asp:TextBox>
+                                    </td>
+                                    <td align="right" style="width: 260px">
+                                        <div class="hide-filter" id="hide-filter" style="width: 260px">
+                                            <%
+                                                try
+                                                {
+                                                    System.Collections.Generic.List<FilterField> fields = this.BPage.CurrentView.GetFilterFields();
+                                                    string filterName = string.Empty;
+                                                    foreach (FilterField field in fields)
+                                                    {
+
+                                                        string fieldName = field.DispCode;
+                                                        string fieldId = BDDataSetFactory.GetDataFieldByDispCode(field.DispCode);
+
+                                                        if (field.Converter != null)
+                                                        {
+                                                            filterName += fieldName + ";";
+                                                            List<Zhongsoft.Framework.KeyValue> items = field.Converter.GetConvertItems();
+                                            %><span class="filter-block"><span class="filter-block-lb"><%=field.Name%></span> <span>
+                                                <select style="width: 155px; margin: 3px 0px;" id="<%=fieldId%>" class="kpms-ddl"
+                                                    name="<%=fieldName %>">
+                                                    <%
+                                                        if (!string.IsNullOrEmpty(field.Converter.SelectTip))
+                                                        {
+                                                    %>
+                                                    <option value="">
+                                                        <%=field.Converter.SelectTip%></option>
+                                                    <%
+}
+                                                        foreach (Zhongsoft.Framework.KeyValue item in items)
+                                                        {
+                                                    %>
+                                                    <option value="<%=item.Key%>">
+                                                        <%=item.Value %></option>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </select></span></span>
+                                            <%
+}
+                                                        else if (Zhongsoft.Framework.SqlTypeHelper.IsSqlTypeString(field.Type))
+                                                        {
+                                                            filterName += fieldName + ";";
+                                            %><span class="filter-block"><span class="filter-block-lb"><%=field.Name%></span> <span>
+                                                <input type='text' style="width: 152px" id="<%=fieldId %>" class="kpms-textbox" name="<%=fieldName %>" /></span></span>
+                                            <%}
+                                                        else if (Zhongsoft.Framework.SqlTypeHelper.IsSqlTypeDateTime(field.Type))
+                                                        {
+                                                            filterName += fieldName + ";";
+                                            %>
+                                            <span class="filter-block"><span class="filter-block-lb">
+                                                <%=field.Name%></span> <span>
+                                                    <input type='text' readonly="readonly" class="kpms-textbox-date" id="<%=fieldId %>_start"
+                                                        name="<%=fieldName %>_start" />
+                                                    <input type='text' readonly="readonly" class="kpms-textbox-date" id="<%=fieldId %>_end"
+                                                        name="<%=fieldName %>_end" />
+                                                </span></span>
+                                            <%}
+                                                        else if (Zhongsoft.Framework.SqlTypeHelper.IsSqlTypeFigure(field.Type))
+                                                        {
+                                                            filterName += fieldName + ";";
+                                            %>
+                                            <span class="filter-block"><span class="filter-block-lb">
+                                                <%=field.Name%></span> <span>
+                                                    <input type='text' class="kpms-textbox" style="width: 70px; text-align: right" id="<%=fieldId %>_start"
+                                                        regex="(^-?[1-9]\d*(\.\d{1,2})?$)|(^[0]\.\d{1,2}$)" errmsg="<%=field.Name %>只能填写数字且最多保留两位小数"
+                                                        name="<%=fieldName %>_start" />
+                                                    <input type='text' class="kpms-textbox" style="width: 70px; text-align: right" id="<%=fieldId %>_end"
+                                                        regex="(^-?[1-9]\d*(\.\d{1,2})?$)|(^[0]\.\d{1,2}$)" errmsg="<%=field.Name %>只能填写数字且最多保留两位小数"
+                                                        name="<%=fieldName %>_end" />
+                                                </span></span>
+                                            <%}
+                                                    }%>
+                                            <input type="hidden" name="hiFilterName" value="<%=filterName%>" /><%
+                                                                                                                   }
+                                                catch (Exception ex)
+                                                {
+                                                    Zhongsoft.Portal.BasePage bizPage = this.Page as Zhongsoft.Portal.BasePage;
+                                                    bizPage.ShowAlertMessage(ex.Message);
+                                                }
+                                            %>
+                                        </div>
+                                    </td>
+                                    <td id="showSearch" style="width: 16px; text-align: center; cursor: pointer;">
+                                        <img src="../../Themes/Images/fleximages/ddn.png" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <asp:ContentPlaceHolder ID="toolBar" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="left" style="width: 220px">
+                            <asp:LinkButton runat="server" ID="btnQuery" OnClick="btnQuery_Click">
+                      <span>查询</span>
+                            </asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="btnResrt" OnClick="btnReset_Click" content="resetResult">
+                    <span>重置</span>
+                            </asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="btnDelete" OnClick="btnDelete_Click" Style="display: none">
+                    <span>删除</span>
+                            </asp:LinkButton>
+                            <asp:LinkButton runat="server" class="searchbtn" ID="btnAdvSearch" OnClientClick="return advSearch()">
+                     <span>高级查询</span>
+                            </asp:LinkButton>
+                        </td>
+                    </tr>
+                </table>
+                <fieldset class="rtm_fds_bd" id="fsAdvSearch" style="display: none">
+                    <legend class="rtm_fds_tle">高级查询</legend>
+                    <asp:ContentPlaceHolder ID="advSearch" runat="server">
+                    </asp:ContentPlaceHolder>
+                </fieldset>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="div2">
+                    <table class="tz-table" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="15%" valign="top" class="list-tree" id="tdTree" style="display: none">
+                                <asp:ContentPlaceHolder ID="treeView" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </td>
+                            <td valign="top" style="padding-left: 3px;">
+                                <div id="divToolBtn" class="subtoolbar" style="margin-bottom: 3px;">
+                                    <div class="subtoolbarbg" id="divConfigBar" runat="server">
+                                        <toolbar:SubToolBar ID="subToolBar" runat="server"></toolbar:SubToolBar>
+                                    </div>
+                                    <div id="divCustomBar">
+                                        <asp:ContentPlaceHolder ID="toolBtn" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                    <div id="divSystemBar" class="subtoolbarbg" runat="server" visible="false">
+                                        <asp:LinkButton runat="server" ID="btnConfig" EnableTheming="false" CssClass="subtoolbarlink"><span>
+                                        <img  title="字典配置" src="<%=BPage.WebAppPath %>/Themes/Images/btn-cfg.gif" width="15" height="15" /></span></asp:LinkButton>
+                                    </div>
+                                    <div style="clear: both">
+                                    </div>
+                                </div>
+                                <div id="divContent" style="overflow: auto;">
+                                    <div style="margin-bottom: 4px">
+                                        <asp:ContentPlaceHolder ID="listGrid" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                    <div>
+                                        <asp:ContentPlaceHolder ID="detailContent" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <asp:Button runat="server" ID="btnSave" OnClick="btnSave_Click" Text="保存" Visible="false" />
+    <input type="hidden" runat="server" id="hiBDListView" />
+    <input type="hidden" runat="server" id="unSavedView" value="0" />
+    <input type="hidden" runat="server" id="hiFilterFlag" value="0" />
+    <div id="showSave" class="flex-save" style="display: none">
+        <span class="text">是否保存当前视图?</span><span>视图名称</span><input type="text" runat="server"
+            id="tbNewViewName" name="tbNewViewName" /><a class="kpms-btn" onclick="saveView();"><img
+                src="../../Themes/Images/btn_save.gif" /><span>保存</span></a><a class="kpms-btn" onclick=" $('#showSave').hide();$sflag.val('0')"><img
+                    src="../../Themes/Images/btn_cancel.gif" /><span>取消</span></a></div>
+    <!-- 高级查询标识-->
+    <input id="hidKeepAdv" type="hidden" name="hidKeepAdv" runat="server" />
+    </form>
+    <script>
+        var $sflag = null;
+        var $gridCheckedClientID;
+        function initFormPlugin() {
+            var t = $("#tdTree").html();
+            t = t.replace(/[\r\n]/g, "").replace(/[ ]/g, "");
+            if (t != "") {
+                $("#tdTree").show();
+            }
+            t = $("#divCustomBar").html();
+            t = t.replace(/[\r\n]/g, "").replace(/[ ]/g, "");
+            if (t == "" && $("#<%=divConfigBar.ClientID %>").length == 0 && $("#<%=divSystemBar.ClientID %>").length == 0) {
+                $("#divToolBtn").hide();
+            }
+
+            if (typeof (transGridParam) == "function") {
+                transGridParam();
+            }
+
+            if ($gridCheckedClientID != undefined) {
+                var array = buildGirdRowIds($gridCheckedClientID);
+                checkGridViewRow(array);
+            }
+            var $filterFlag = $("#<%=hiFilterFlag.ClientID %>");
+            buildMenu(); buildFilter($filterFlag);
+            $sflag = $("#<%=unSavedView.ClientID %>");
+            if ($sflag.val() == "1") showSave();
+
+            keepAdvSearch();
+            
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+                $('#tdPageTitle').hide();
+            }
+
+            //冻结工具栏 tianhl 20150122
+            setSize();
+            if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+                document.body.onresize = setSize;
+            } else {
+                window.onresize = setSize;
+            }
+        }
+
+        function configDict(bizId) {
+            var url = buildBizUrl("3", bizId, "bdm/list/DictEditor.aspx", null);
+            showModal(url, null, 1080, 600);
+            return true;
+        }
+
+          $("#<%=ddlView.ClientID %>").live("change", function () {
+            $("div#hide-filter input[type='text']").each(function () {
+                 $(this).val("");
+            })
+            return true;
+        })
+
+        $("[content='resetResult']").live("click", function () {
+            $("div#hide-filter input[type='text']").each(function () {
+                if ($(this).attr('name') != 'hiFilterName') {
+                   var def=$(this).attr("defaultValue");
+                    $(this).val(def);
+                }
+            })
+           $("div#hide-filter input[type='checkbox']").each(function () {
+                   var def=$(this).parent("span").attr("defaultValue");
+                   if(def==null||def==undefined)
+                   {
+                     $(this).removeAttr("checked");
+                   }
+                   else if(def.toLowerCase()=="true"){
+                     $(this).attr("checked","True");
+                   }
+                   else{
+                    $(this).removeAttr("checked");
+                   }
+            })
+            $("div#hide-filter select").each(function () {
+                var def=$(this).attr("defaultValue");
+                $(this).val(def);
+            })
+            return true;
+        })
+
+
+        function setShowSave() {
+            $sflag.val("1");
+            showSave();
+        }
+
+        function checkGridViewRow(array) {
+            transParamToToolBar(array, null);
+        }
+
+        //向顶部工具条传入参数
+        function transParamToToolBar(rowIds, param) {
+            if (typeof (getGirdParam) == "function") {
+                getGirdParam(rowIds, param);
+            }
+        }
+
+        function buildGirdRowIds(gridId) {
+            var array = new Array();
+            var ids = $("#" + gridId).val();
+            if (ids != '') {
+                array = jQuery.parseJSON(ids);
+            }
+            return array;
+        }
+
+        function rebindGridData() {
+             <%=this.Page.GetPostBackEventReference(this.btnQuery,"") %>;  
+        }
+
+        function deleteData() {
+            return window.confirm("您确定删除吗？");
+        }
+
+        function keepAdvSearch() {
+            if ("1" == $("#<%=hidKeepAdv.ClientID%>").val()) {
+                $("#fsAdvSearch").show();
+            }
+        }
+
+        function advSearch() {
+            var displayStyle = $("#fsAdvSearch").css('display');
+            if (displayStyle == "none") {
+                displayStyle = "";
+                $("#<%=hidKeepAdv.ClientID%>").val('1')
+            }
+            else {
+                displayStyle = "none";
+                $("#<%=hidKeepAdv.ClientID%>").val('0')
+            }
+            $("#fsAdvSearch").css('display',displayStyle);
+
+            return false;
+        }
+
+        function setSize() {
+            var trHeight = $('#trToolbar').height();
+            var toolbarHeight = $('#divToolBtn').height();
+            var paddingHeight = 14;
+            //窗体高度-工具栏高度-间隔高度
+            //Modify by xiedx 将paddingHeight改为14，否则出现双滚动条
+            $('#divContent').height(($(window).height() - trHeight - toolbarHeight - paddingHeight) + 'px');
+        }
+
+    </script>
+</body>
+</html>

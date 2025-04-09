@@ -1,0 +1,104 @@
+﻿
+
+.form-header{ height:130px; width:100%; background:url(../images/toplj.jpg) bottom repeat-x; border-bottom:#B2B9BF 1px solid;}
+.form-title{ height:38px; width:1000px; margin:0 auto; line-height:60px; font-size:22px; font-weight:normal; font-family:"微软雅黑", "黑体"!important; text-align:center; /* padding:12px 0px 11px 0px;*/}
+.form-title span{ font-weight:normal; color:#2E3092; }
+.form-function{width:100%; margin:auto;}
+.form-main{ width:1000px; margin:0 auto; background:#EFF3F6; padding-bottom:15px;}
+.form-link{ height:32px; padding-left:10px;line-height:32px; background:#EFF3F6; border-left:#C4C4C4 1px solid;border-right:#C4C4C4 1px solid;
+            border-bottom:#C4C4C4 1px solid; }
+.form-link a:hover{ color:#F00;}
+.form-contentbody{}
+.form-content{ border:#C4C4C4 1px solid; margin-top:4px;}
+.form-content-t{ height:26px; background:url(../images/ltitlebg.jpg) repeat-x; line-height:26px; font-weight:bold;}
+.rimg{ float:right; padding-top:10px; padding-right:6px;}
+.form-content-t img{ padding-left:7px; padding-right:4px;}
+.form-content-timg{ float:right; padding-top:8px; padding-right:6px;}
+.form-content-b{ border-top:#C4C4C4 1px solid; padding:8px 16px 8px 16px; background:#fff/*#f7f8f9*/; }
+
+
+
+
+/**功能区的页签样式**/
+.form-tabs-title{display:block; clear:both; width:90%; height:23px;}
+.form-tabs-title li{display:block; float:left; border-top:#B6B9BE 1px solid;border-left:#B6B9BE 1px solid; border-right:#B6B9BE 1px solid; margin-left:2px;}
+.form-tabs-title a{ color:#666; display:block; padding:0px 10px; line-height:22px;}
+.form-tabs-title a:hover{color:#dd0208; }
+.form-tabs-title a.form-tabs-tlink{ color:#014380/*999999*/; border-bottom:#fff 1px solid;}
+.form-tabs-content{ height:69px;}
+
+
+/*填写意见、成品清单、会签成品外部边框样式*/
+.form-ys-main{ padding-bottom:10px; background:url(../images/form-ys-mainbg1.jpg) left top no-repeat;}
+.form-ys-maint{ height:23px; background:url(../images/form-ys-mainbg2.jpg) right top no-repeat; padding-left:10px; }
+.form-ys-maint span{line-height:23px; background:#EFF3F6; padding-left:3px; padding-right:3px; }
+.form-ys-mainb{ border-bottom:#C4C4C4 1px solid; border-right:#C4C4C4 1px solid; border-left:#C4C4C4 1px solid; padding:3px 13px 13px 13px;}
+
+
+/*办理意见表格样式*/
+.form-blyi{ width:100%; border-spacing:0px; border-collapse:collapse; border:#C4C4C6 1px solid; margin-bottom:8px; }
+.form-blyi td{  border:#C4C4C6 1px solid; padding-left:3px; padding-right:3px; line-height:26px;}
+.form-blyi-odd{background:#f6f7f9;}
+.form-blyi-even{background:#fff;}
+.kpms-p-oponion{ display:inline; padding-right:10px;}
+
+/*工作跟踪表格样式*/
+.form-gzgz{ width:100%; border-spacing:0px; border-collapse:collapse; border:#C4C4C6 1px solid; margin:6px 0px 6px 0px; }
+.form-gzgz th{ height:29px;white-space:nowrap;word-break:keep-all;border:#C4C4C6 1px solid;  font-weight:normal!important;  }
+.form-gzgz td{  height:29px;border:#C4C4C6 1px solid; padding-left:10px; padding-right:3px;}
+.form-gzgz-header{background:url(../images/gzgzbg.jpg) repeat-x;text-align:center;color:#000;}
+.form-gzgz-odd{background:#FBFCFE;}
+.form-gzgz-even{background:#fff;}
+.form-gzgz-footer{background:#fff; border:#d1d1d1 1px solid; height:35px; }
+.form-gzgz-footer td{text-align:left;padding-left:10px;height:26px; border:none;}
+
+
+
+
+
+/** 全屏显示 **/
+.form-contentfulls{width:100%;}
+.form-contentfulls .form-function{ width:100%;}
+.form-contentfulls .form-table{ width:100%;}
+.form-contentfulls .form-contentmid{}
+.form-contentfulls .form-top{width:100%;}
+.form-contentfulls .form-bottom{ width:100%;}
+.form-contentfulls .form-topmid{}
+.form-contentfulls .form-bottommid{}
+.form-contentfulls .form-toolbar{ width:100%;}
+.form-contentfulls .form-toolbarmid{}
+.form-contentfulls .form-tab{ width:100%}
+.form-contentfulls .kpms-rollist-div{ width:100%;}
+.form-contentfulls .kpms-rollist-divlast{width:100%;}
+.form-contentfulls .kpms-tablenobor{}
+.form-contentfulls .form-fujian{}
+.form-contentfulls .kpms-wflong{ width:100%;}
+
+ 
+/*** 页面进度样式 ***/
+#form-loading{ text-align:center; }
+#form-loading span{ display:block; margin:0 auto;}
+
+
+/** 办理过程 **/
+.form-tablenobor{ border:0; text-align:center; margin:0 auto;}
+.form-step{background:#FFFFFF; width:100%; text-align:left; margin:0 auto;border:#6f9dd1 1px solid;border-collapse:collapse;border-spacing:0px; vertical-align:middle;}
+.form-step td{border:#6f9dd1 1px solid; height:25px;}
+.form-steptitle{background:#A3C2EA url(../Images/tabstitle.gif) repeat-x;height:25px;padding-left:2px;}
+.form-stepone{ width:30%;}
+.form-steptwo{}
+.form-steptime{ width:15%;}
+.form-stepman{width:20%;}
+/** 附件页面css **/
+.form-fujian{ text-align:center; margin:0 auto; border:0px #cccccc solid;}
+.form-fujiantd{ border:1px #cccccc solid; width:184px; text-align:left; height:20px; vertical-align:middle;}
+.form-fujiantd:hover{background:#fff693;}
+.form-fujiana{/*display:block;*/ /*position:relative;*/width:160px;height:20px; line-height:20px; text-overflow:ellipsis;white-space:normal;white-space:nowrap;overflow:hidden;}
+.form-fujiana:hover{ text-decoration:underline;} 
+.form-alphaBox { position: absolute; left: 0;  top: 0; z-index: 500; background: #000;  filter:alpha(opacity=30); opacity: 0.6; -moz-opacity: 0.6; }
+
+
+.form-tab{ background:url(../Images/lctitlebg1.jpg) repeat-x; height:30px; margin:0 auto; cursor:pointer; color:#000;}
+.form-tab-i{ width:15px;}
+.form-tab-f{ text-align:left; font-size:10pt; font-weight:bold;}
+.form-tabcontent{ padding:15px;}

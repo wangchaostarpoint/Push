@@ -1,0 +1,104 @@
+﻿.flex-save
+{
+	border: #c1a20f 1px solid;
+	position: absolute;
+	width: 470px;
+	height: 30px;
+	line-height: 20px;
+	background: #ffe156;
+	padding-left: 10px;
+}
+.flex-save .text
+{
+	font-weight: bold;
+	padding-right: 20px;
+	display: inline-block;
+	height: 30px;
+	line-height: 28px;
+}
+.flex-save span
+{
+	display: inline-block;
+	height: 30px;
+	line-height: 28px;
+}
+.hide-filter
+{
+	position: absolute;
+	top: 0px;
+	z-index: 0;
+	border-bottom: #ccc 0px solid;
+	height: 30px;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+	line-height: 25px;
+}
+.show-filter
+{
+	position: absolute;
+	top: 0px;
+	z-index: 100000;
+	border-top: #ccc 0px solid;
+	overflow: visible;
+	padding: 0px;
+	margin: 0px;
+	line-height: 25px;
+	background: #eff2f7;
+	border-right: #ccc 1px solid;
+	border-bottom: #ccc 1px solid;
+	border-left: #ccc 1px solid;
+}
+.filter-block
+{
+	border: #c5dbec 1px solid;
+	padding: 0px 5px;
+	line-height: 25px;
+	display: inline-block;
+	color: #000;
+	white-space: nowrap;
+	margin: 2px 2px;
+}
+.filter-block span
+{
+	float: left;
+}
+.filter-block span input
+{
+	margin: 2px 0px;
+}
+.filter-block span.ui-icon-close
+{
+	margin-top: 5px;
+}
+.filter-block-lb
+{
+	/*width: 87px;*/
+	text-align: left;
+	padding-right: 5px;
+}
+.ui-icon-close:hover
+{
+	background-image: url(/portal/themes/Images/JQuery/ui-icons_6da8d5_256x240.png) !important;
+	background-position: -32px -192px !important;
+}
+.menu-div
+{
+	display: inline-block;
+	height: 25px;
+}
+.div-container
+{
+	z-index: 0;
+	height: 30px;
+	overflow: visible;
+	padding: 0px;
+	margin: 0px;
+	min-width: 20px;
+	line-height: 25px;
+	padding-right: 20px;
+	margin-right: 20px;
+	background: #fff;
+	border: #89acd4 1px solid;
+	float: left;
+}

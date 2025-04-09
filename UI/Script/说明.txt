@@ -1,0 +1,44 @@
+﻿功能：脚本空间
+描述：
+
+
+
+
+文件：KPMSJSONEntity.js
+功能：JSON 业务实体
+描述：
+   定义业务中所有涉及的实体对象：
+   1、所有实体对象数组都必须包含属性"JsonId"唯一标示和"JsonTitle"显示标示
+      例如：如果是客户实体，可以将CustomerId写入JsonId这个属性;CustomerName写入JsonTitle属性
+      
+   2、每个选择数据窗体都要定义一个变量JsonParam,来定义参数
+      ChooseType  S:单选 M:多选 
+      Params  扩展参数
+      
+   3、页面定义内部参数结构体JsonEntity，作为参数主体信息
+	   
+	   例如：
+	   
+	   public struct JsonEntity
+	   {
+			public string JsonId,
+			public string JsonName
+			
+	   }
+时间：2011-06-15
+ 
+
+
+
+
+
+/** 
+	XML OutputParameter InputParameter 
+	id,name 为标准属性 attr1,attr2...自定义属性
+**/
+<root>
+	<o id="" name="" attr1="" attr2=""/>
+	<o id="" name=""/>
+	...
+</root>
+

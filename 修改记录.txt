@@ -1,0 +1,88 @@
+﻿1、增加回退功能   苏楠   2012-9-4
+
+/Workflow/FormToolbar.ascx
+/Workflow/FormDetail.aspx
+增加图片btn_back.gif
+Zhongsoft.Portal.General更新
+OrganizationUsers表增加字段pwd varchar(50),pwdlastmodify datetime
+
+
+
+2、委托人处理工作后，给实际处理人发送传阅     苏楠   2012-9-4
+
+Standard,SOA
+FormDetail.aspx
+
+
+3、待办事项列表增加任务发送人栏   苏楠   2012-9-4
+
+Workflow/WorkToDoList.aspx
+
+ 
+4、修改权限控制 苏楠 2012-12-25
+
+USP_ACL_CheckSecurityModuleRule重命名为:USP_ACL_CheckSecurityPageRule
+包括其中参数名称
+Zhongsoft.Portal.ACL 需要更新
+
+模块权限需要单独处理；
+
+
+
+
+
+
+2013.2.21 sunan 
+
+表
+
+OrganizationOfficial 字段调整
+
+PortalMenu->PortalPages
+
+
+
+
+相应调整存储过程
+
+USP_GetUsersByUnitRole
+USP_Portal_GetChildMenus
+USP_OU_GetChildDepartment
+
+
+
+
+2013-6-15
+
+1、修改ACL存储过程的命名兼容Oracle。
+
+
+2014-7-29 huwl
+
+1.插件中可以访问当前用户，访问方法示例：
+  1）ActivityEventContext 参数：
+       public void ReceiveActivity(Activity activity, ActivityEventContext e)
+        {
+            User u = e.User;
+        }
+  2）ProcessEventContext 参数： 
+       public void DeleteProcess(WorkflowProcess process, ProcessEventContext e)
+        {
+            User u = e.User;
+        }
+  3）ListEventContext 参数（页面功能调用插件方法）： 
+       public static void CreateCarMMForm(object sender, ListEventContext ctx)
+        {
+            if (ctx.RowIds.Count == 0) { return; }
+
+            CarMaintainApply cma = GVMHelper.CreateEmptyCarMaintainApply();
+            cma.CarMaintainFormId = ctx.RowIds[0];
+
+            User u = ctx.User;
+            cma.AutoStartWorkFlow(u);
+ 
+            LinkButton btn = sender as LinkButton;
+            ((Zhongsoft.Portal.BasePage)btn.Page).ShowAlertMessage("操作成功");
+        }
+2.解决BUG：筛选条件配置信息丢失。
+3.解决BUG：设置转换格式列在页面刷新后显示不正确。

@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+.list-leader{  height:32px;  background-color:#EFF2F7; border-bottom:#C0C3C8 1px solid;border-right:#C0C3C8 1px solid;  }
+.list-title{ /*padding-left:10px;*/ font-size:14px; font-weight:bold; height:32px;}
+.list-content{ padding:0px 3px 2px 3px;}
+.list-tree{ border-top: 1px #C0C3C8 solid;border-bottom: 1px #C0C3C8 solid;border-right: 1px #C0C3C8 solid; background:#fff;}
+
+/*卷册任务提醒预警样式类 add by 许宁 */
+ /*卷册任务延期预警信息样式*/
+ .wbsWarning
+ {
+   color: #ff0000;
+ }
+/*卷册任务到期提醒信息样式*/
+.wbsRemind
+{
+  color: #ffa500;
+}
+/* end */

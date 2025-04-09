@@ -1,0 +1,20 @@
+﻿/*查询条件新加样式*/
+.searchbtn{ display:inline-block; margin:0px 8px; text-align:center; color:#a9adb6; text-decoration:underline; }
+a.searchbtn:hover{ color:#e17009!important;}
+.seniorsearch img{}
+.ddl {background:#fff;position:relative;display:inline-block;z-index:100000; float:left;}
+.ddltitle {border:#ddd 1px solid;display:inline-block;background:#fff url(/portal/Themes/Images/ddl.gif) right center no-repeat;
+height:25px;padding:0px 20px 0px 6px;line-height:25px;z-index:1;}
+.ddltitlenobor {border-color:#e17009;border-bottom:#fff 1px solid;}
+.ddltitlesel {background-color:#ffb;}
+.ddlist {width:500px;background:#fff;position:absolute;top:26px; display:none; left:0px;border:#e17009 1px solid;
+         z-index:-1;height:200px;overflow:auto;}
+.ddlist .kpms-chklist{ width:100%;}
+.ddlist .kpms-chklist input{border:none;}
+.ddlbtn { position:absolute; right:10px; top:4px;}
+.ddltextbox { height:23px;padding:5px 5px 0px 3px;}
+.ddlsearchtextbox { background:url(/portal/Themes/Images/search.jpg) left center no-repeat;background-color:#fff;border:#dbdfe6 1px solid; border-top-color:#abadb3; border-bottom-color:#e3e9ef;  padding-left:20px;}
+.ddlcheckall input{border:none;}
+
+.selectText{ color: #e17009;font-weight:bold;}
+.bluecolor{color:Blue;}

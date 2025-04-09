@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+.selector-body{ background:#fff;}
+.selector-explanation{ background:#fff; padding:8px; line-height:16px; color:#000; border-bottom:#ced6de 1px solid;}
+.selector-title{ padding-left:8px; background:url(../images/selectortittlebg.jpg) bottom repeat-x; height:30px!important; line-height:30px; font-size:12px; font-weight:bold; color:#000000;}
+
+.searchstyle{ margin:2px 10px; font-size:12px; color:#000000;}  
+.selector-list{ margin:0px 5px 10px 5px; padding-top:10px; background:url(../images/searchstylebg.jpg) top repeat-x; }
+.selector-listbox{ border:#ced6de 1px solid!important; width:100%;}
+.selector-tree{ border-top: 1px #C0C3C8 solid;border-bottom: 1px #C0C3C8 solid;border-right: 1px #C0C3C8 solid;}

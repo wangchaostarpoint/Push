@@ -1,0 +1,79 @@
+﻿.placeholder
+{
+	border: 1px solid #fcefa1;
+	background: #fbf9ee url("/portal/themes/images/jquery/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+	color: #363636;
+	height: 30px;
+}
+.connectDiv
+{
+	width: 100%;
+	border: #6d6e70 1px dashed;
+	min-height: 200px;
+	height: 100%;
+}
+
+.topDiv
+{
+	border: #92c0e0 1px solid;
+	margin: 2px;
+	text-align: center;
+	height: 25px;
+	line-height: 25px;
+	background: #e0effa;
+}
+
+.topA:hover
+{
+	color: Red;
+	text-decoration: underline;
+}
+
+
+.ctrlDiv
+{
+	border: #ead1a6 1px solid;
+	margin: 2px;
+	background: #ffffe3;
+}
+
+.selectCtrlDiv
+{
+	border: #d6b782 1px solid;
+	margin: 2px;
+	background: #ffffe3;
+}
+
+.relationDiv
+{
+	height: 20px;
+	border: #000 1px solid;
+	margin: 5px;
+	vertical-align: middle;
+	width: 200px;
+}
+
+.selectRelationDiv
+{
+	height: 20px;
+	border: blue 1px solid;
+	margin: 5px;
+	vertical-align: middle;
+	width: 200px;
+}
+
+.containDiv .trHide
+{
+	display: none;
+}
+
+.connectTd
+{
+	border: #6d6e70 1px dashed;
+	min-height: 100px;
+	min-width: 100px;
+	padding: 5px;
+}
+
+
+

@@ -1,0 +1,304 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectSelector.master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.ObjectSelector" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <title></title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <link href="../../Themes/Styles/objectselector.css" rel="stylesheet" type="text/css" />
+    <link rel='stylesheet' type='text/css' href='../../Themes/Styles/zTreeStyle.css' />
+    <link rel="stylesheet" type="text/css" href="../../Themes/Styles/form.css" />
+    <link rel="stylesheet" type="text/css" href="../../Themes/Styles/formsender.css" />
+    <link rel="stylesheet" type="text/css" href="../../Themes/Styles/common2.css" />
+    <base target="_self" />
+</head>
+<body class="selector-body" style="overflow: hidden">
+    <form id="form1" runat="server" defaultbutton="btnQuery">
+        <asp:ScriptManager ID="SM" runat="server">
+        </asp:ScriptManager>
+        <div id="divExplain" class="selector-explanation">
+            <div style="font-weight: bold; font-size: 14px" id="divTitle">
+                <%=this.Page.Title %>
+            </div>
+            <div id="divTip">
+                <asp:ContentPlaceHolder ID="toolTip" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <div id="divtoolBar" style="background: #fff; overflow-x: hidden; overflow-y: auto; width: 99%; padding: 1px">
+            <table class="searchstyle" align="right" width="100%">
+                <tr>
+                    <td id="tdtoolBar">
+                        <asp:UpdatePanel ID="barPanel" runat="server">
+                            <ContentTemplate>
+                                <table width="100%">
+                                    <tr>
+                                        <td align="right">
+                                            <asp:ContentPlaceHolder ID="toolBar" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </td>
+                                        <td style="width: 140px">
+                                            <asp:LinkButton runat="server" ID="btnQuery" OnClick="btnQuery_Click">
+                                        <span content='searchResult'>查询</span>
+                                            </asp:LinkButton>
+                                            <asp:LinkButton runat="server" ID="btnReset" OnClick="btnReset_Click" content="resetResult">
+                                               <span>重置</span></asp:LinkButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divList" style="background: #fff; overflow-x: hidden; overflow-y: auto; width: 99%; padding: 1px">
+            <asp:UpdatePanel ID="listPanel" runat="server">
+                <ContentTemplate>
+                    <asp:ContentPlaceHolder ID="listGrid" runat="server">
+                    </asp:ContentPlaceHolder>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+        <div id="divBottom">
+            <table cellspacing="0" cellpadding="0" width="100%" height="100%" id="tbBottom">
+                <tr>
+                    <td class="selector-title">选定信息<span id="tip" class="req-star"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="selParts" class="ui-widget-content xpdl-widget-sels selector-listbox" style="padding: 1px; width: 99.5%; height: 80px;">
+                        </div>
+                        <div id="noBlock" style="padding: 1px;">
+                            <select id="objContainer" size="5" class="selector-listbox">
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <%-- <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>--%>
+                <tr id="trbtOK">
+                    <td align="center">
+                        <div class="selector-list" style="padding: 1px; width: 99.5%; height: 40px;">
+                            <a href="#" class="btn-link" onclick="finishSelect();"><span>确定</span></a> <a href="#"
+                                class="btn-link" onclick="cancelSelect();"><span>取消</span></a>
+                            <asp:Button ID="btnDoMyFinish" runat="server" Text="相应选择结果" Visible="false" OnClick="btnDoMyFinish_Click" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="hidden" runat="server" id="inputParam" />
+        <input type="hidden" runat="server" id="outputParam" name="outputParam" />
+        <input type="hidden" runat="server" id="extendParam" name="extendParam" />
+        <script language="javascript">
+            //使用块模式显示选中项
+            var $EnterShow;
+            //是否按块显示选中项，用户切换旧的选择方式
+            var isBlock = true;
+            var $inHiParam = $("#<%=inputParam.ClientID %>");
+            var $outHiParam = $("#<%=outputParam.ClientID %>");
+            var $exHiParam = $("#<%=extendParam.ClientID %>");
+            var inputObj = new InputParamObject();
+            var outputObj = new OutputParamObject();
+
+            function addPart(id, name) {
+                var $selPart = $("<div class='ui-state-default xpdl-sel-widget-part' id='" + id + "'></div>");
+                var $p = $("<div class='xpdl-sel-part' style='color:#000; font-size:14px;'>" + name + "</div>");
+                var $c = $("<span class='ui-icon ui-icon-close' title='点击删除'></span>");
+                var $b = $("<br/><br/><br/>");
+                $p.appendTo($selPart); $c.appendTo($selPart);
+                $selPart.appendTo($('#selParts'));
+                //if($EnterShow == undefined || ($EnterShow != undefined && $EnterShow)){//换行显示
+                //    $b.appendTo($('#selParts'));
+                //}
+
+                $c.click(function () {//删除选中
+                    var id = $(this).parent('.xpdl-sel-widget-part').attr('id');
+                    $(this).parent('.xpdl-sel-widget-part').remove();
+                    outputObj.removeParam(id);
+                    $outHiParam.val(outputObj.xmlObj.xml());
+                });
+            }
+
+            function setEmpty() {
+                $('.xpdl-sel-widget-part').remove();
+            }
+
+            function getOutPutParam() {
+                return $outHiParam.val();
+            }
+            function setSize() {
+                var padding = 3; //边距
+                $("#divList").height($(window).height() - $("#divExplain").height() - $("#divtoolBar").height() - $("#divBottom").height() - padding);
+            }
+            function initFormPlugin() {
+                var args = window.dialogArguments;
+                if ("<%=DIALOG_MODE%>" == "Dialog") {
+                //此处脚本执行了两次，具体机制问题暂未明确 by leixf 20141210
+                $("#trbtOK").hide();
+                if (window.parent.document.getElementById("<%=PARAM_HI_ID%>") != null) {
+                    var str = window.parent.document.getElementById("<%=PARAM_HI_ID%>").value;
+                    var tempXml = new InputParamObject();
+                    tempXml.loadParam(str);
+                    args = tempXml;
+                }
+
+                //dialog显示当前title
+                setDialogTitle('<%=PARAM_HI_ID%>');
+                    $('#divTitle').hide();
+                    //没有备注信息，将整行隐藏
+                    if ($('#divTip').text() == '') {
+                        $('#divExplain').hide();
+                    }
+                }
+
+                if (args != undefined
+                    && $inHiParam.val() == "") {
+                    $inHiParam.val(args.xmlObj.xml());
+                    $exHiParam.val(args.exparam);
+                    buildOptByInput(args.xmlObj);
+                }
+                inputObj.loadParam($inHiParam.val());
+
+                if (isBlock) {
+                    //按照块显示选中项
+                    $('#selParts').show();
+                    $('#noBlock').hide();
+                    $('#tip').hide();
+                }
+                else {
+                    //传统按照条显示选中项
+                    $('#selParts').hide();
+                    $('#noBlock').show();
+                    $('#tip').hide();
+                    $("#objContainer").dblclick(function () {
+                        var id = $(this).val();
+                        if (id != null) {
+                            $("#objContainer option:selected").remove();
+                            outputObj.removeParam(id);
+                            $outHiParam.val(outputObj.xmlObj.xml());
+                        }
+                    });
+                }
+
+                setSize();
+                if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+                    document.body.onresize = setSize;
+                } else {
+                    window.onresize = setSize;
+                }
+
+                $("input[type='text']:first").focus();
+            }
+            function buildOptByInput(xmlObj) {
+                var jsonList = xmlObj.getJsonList("o");
+                for (var i = 0; i < jsonList.length; i++) {
+                    addObject(jsonList[i]);
+                }
+            }
+
+            function addDefualtObject(json, single) {
+                if (outputObj.xmlObj.selectNodes("//o").length == 0 || !single) {
+                    addObject(json)
+                }
+            }
+
+            function addObject(json) {
+                if (typeof (addMyObject) == 'function') {
+                    addMyObject(json);
+                    return;
+                }
+                if (typeof (checkThisObject) == 'function') {
+                    if (!checkThisObject(json))
+                        return false;
+                }
+                var useKey = typeof (json[0]) == 'undefined'; //用key:value,兼容
+                var keys = [];
+                if (useKey) {
+                    for (var k in json) { keys.push(k); }
+                    if (outputObj.xmlObj.isExistById(json[keys[0]], "o")) return;
+                    var tObjName = "";
+                    if (json[keys[2]] != "" && json[keys[2]] != undefined)//显示标示
+                        tObjName = json[keys[1]] + "[" + json[keys[2]] + "]";
+                    else
+                        tObjName = json[keys[1]];
+                    if (inputObj.mode == "s") {
+                        if (isBlock)
+                            setEmpty();
+                        else
+                            $("#objContainer").empty();
+                        outputObj.removeAllParam();
+                        $outHiParam.val(outputObj.xmlObj.xml());
+                    }
+                    if (isBlock)
+                        addPart(json[keys[0]], tObjName);
+                    else
+                        createOption("objContainer", tObjName, json[keys[0]]);
+                    outputObj.addJsonParam(json);
+                }
+                else {
+                    if (outputObj.xmlObj.isExistById(json[0], "o")) return;
+                    var tObjName = "";
+                    if (json[2] != "" && json[2] != undefined)//显示标示
+                        tObjName = json[1] + "[" + json[2] + "]";
+                    else
+                        tObjName = json[1];
+                    if (inputObj.mode == "s") {
+                        if (isBlock)
+                            setEmpty();
+                        else
+                            $("#objContainer").empty();
+                        outputObj.removeAllParam();
+                        $outHiParam.val(outputObj.xmlObj.xml());
+                    }
+                    if (isBlock)
+                        addPart(json[keys[0]], tObjName);
+                    else
+                        createOption("objContainer", tObjName, json[keys[0]]);
+                    outputObj.addParam(json[0], json[1], json);
+                }
+                $outHiParam.val(outputObj.xmlObj.xml());
+
+            }
+            function finishSelect() {
+                if (typeof ($doMyFinish) != "undefined") {
+                    if (typeof (beforeFinishSelect) == "function") {
+                        if (!beforeFinishSelect()) {
+                            return false;
+                        }
+                    }
+                <%=this.Page.ClientScript.GetPostBackEventReference(this.btnDoMyFinish,string.Empty) %>;
+                }
+                else {
+                    window.returnValue = outputObj.xmlObj.xml(); //窗口关闭后对象自动销毁；字符串没有销毁
+                    window.close();
+                }
+            }
+            function cancelSelect() {
+                window.returnValue = null;
+                window.close();
+            }
+            function rebindSelectorList() {
+            <%=this.Page.GetPostBackEventReference(this.btnQuery,"") %>;
+            }
+            //选择完成调用页面方式执行数据操作
+            function doFinish() {
+            <%=this.Page.ClientScript.GetPostBackEventReference(this.btnDoMyFinish,string.Empty) %>;
+            }
+        </script>
+    </form>
+</body>
+</html>

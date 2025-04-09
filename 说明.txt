@@ -1,0 +1,192 @@
+﻿功能：Web层WebApplication
+描述：
+
+
+/**  配置 **/
+
+文件上传
+
+HttpUploadHandler.ashx 设置为匿名访问。
+
+
+跨域访问
+
+将ClientAccessPolicy.xml放入到IIS站点的根目录下，并设置为匿名访问。
+
+/** 数据库 **/
+
+数据库操作：
+
+1、存储过程命名
+
+	{USP}_{项目名}_{模块名}_{描叙功能}
+
+
+	{USP}_{模块名}_{描叙功能}
+
+
+	{USP}_{描叙存储过程功能}
+	
+
+
+/**  系统结构说明 -现有模块说明**/
+
+子系统名称	 子系统简称
+  
+人力资源	  EHR 
+生产管理	  EPMS 
+市场经营管理  MM 
+综合管理	  KMS
+门户管理	  PWS 
+
+	
+
+系统下目录划分:
+Entity             实体对象；业务对象;域名空间紧跟系统名称，不需带Entity
+Base              基础类；域名空间紧跟系统名称，不需带Base
+Form			   流程表单
+List               台账；功能列表；对象选择(选择项目、客户)页面
+Report              统计报表
+SOA                WebService；公用方法 域名空间紧跟系统名称，不需带SOA
+
+
+/**  系统文件夹SYS **/
+
+Base:          Portal整体基础类   Zhongsoft.Portal
+General:       Portal通用方法     Zhongsoft.Portal 
+
+
+
+
+
+
+/****  XML存储结构 ****/
+
+根元素：root
+子元素对象: o (小写英文字母o)  特殊属性id：唯一标示 name：对象名称
+扩展属性： 开发者自己定义，以Camel格式命名
+<root>
+	<o id="id" name="name"/>
+	<o id="id1" name="name1"/>
+</root>
+
+
+
+
+/****  表命名  ****/
+
+ 
+1、系统内置功能（与业务无关）；如：菜单，权限，文件存储
+代码一般以Portal开头访问系统内置功能
+
+
+
+2、业务表
+
+以子系统缩写开头。
+
+
+3、参数表
+
+以子系统缩写开头，后跟Param
+
+
+
+
+
+
+
+
+
+
+
+Sys/Handler
+
+ESignHandler.ashx 需要配置与验证方式一致
+HttpUploadHandler.ashx 设置为匿名访问
+FileDownloadHandler.ashx 设置为匿名访问
+
+
+
+Sys/SOA
+
+WorkflowService.asmx 需配置匿名验证
+
+
+
+其他：
+
+ClientAccessPolicy.xml 需配置匿名验证
+KOA中的文档模板需要设置为匿名验证
+
+
+
+Silverlight:
+
+如果是IIS6.0需要配置MIME
+.xaml   application/xaml+xml
+.xap    application/octet-stream
+
+
+
+
+重要修改记录：
+
+1、OrganizationUsers
+
+IsActivied -> Flag 
+
+删除专业ID,
+
+
+
+
+标准表单打印功能：
+
+一、	在开发完一个流程以后，如果需求中写明了需要有标准表单，那么就要开发对应流程的标准表单数据源视图，
+一般流程会有两种数据源：表单信息bd、签字信息qz，如果流程表单有列表，那么还需要增加列表信息lb，
+具体也可以根据客户提供的标准表单模板进行针对性开发，然后在xml文件中进行配置与流程台帐的关联
+见Sys/SWCS/StandardizedForm/DataSource.xml
+
+
+
+
+系统现有模板整理：by tianhl 20150119
+
+AM：资产设备管理（目前只有软件管理部分）
+CRM：客户关系管理
+EHR：人力资源管理
+EPMS：生产项目管理（产品）
+ERL：企业风险管理
+ESD：生产管理（最新的按照EPMS）
+
+FM 财务管理
+FRM 财务报销管理
+
+GCM 会议管理
+GM 综合管理
+GPM 出版管理
+GVM 车辆管理
+
+INC ：项目信息同步接口
+
+MBM 市场招标采购管理
+MCM 市场合同管理
+MDM 市场开发管理
+MIM 内部市场管理
+MM 市场经营其他
+
+PUM 党工团管理
+
+QSM 质量安全管理
+
+SM 战略管理
+
+TQ 质量评先系统
+
+TSM 科技管理
+
+
+BDM：数据字典相关
+
+DSS：决策支持系统（Decision Support System）

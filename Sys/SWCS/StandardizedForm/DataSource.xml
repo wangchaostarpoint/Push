@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+  1 EPMS数据库可使用数据源：包括视图、数据表。用来配置信息，如标准表单打印。 
+  2 属性说明：
+    1) name：视图或者数据表名
+    2) type：取值“View”或“Table”，用来区分数据源类型
+    3) useTo：使用范围，如StandardizedForm（标准表单配置），多个以“|”相连
+	4）dataType，数据源类型，bd表单，qz签字，lb列表，不过在sql中字段不需要前缀，程序会自动对应书签
+	5）formid，对应的流程/台帐标识，实现数据源与流程台帐的对应关系
+	6）配置固化信息流程主键字段名"流程主表ID"签字角色字段名"签字角色"; 签字人员字段名 "工号";
+	
+	注意！！！该文件废弃，后续标准表单数据源在系统管理下数据字典中进行配置，配置为视图。
+-->
+<root>
+	<!-- 客饭申请流程数据源-->
+	<o name="V_SWCS_客饭申请流程信息" type="View" useTo="StandardizedForm" dataType="bd" formId="23"/>
+	<o name="V_SWCS_客饭申请签字信息" type="View" useTo="StandardizedForm" dataType="qz" formId="23"/>
+	<o name="V_SWCS_客饭申请列表信息" type="View" useTo="StandardizedForm" dataType="lb" formId="23"/>
+	<!-- 客饭申请台帐数据源-->
+	<o name="V_SWCS_客饭申请流程信息" type="View" useTo="StandardizedForm" dataType="bd" formId="GM_VISITORMEALAPPLYFORM"/>
+	<o name="V_SWCS_客饭申请签字信息" type="View" useTo="StandardizedForm" dataType="qz" formId="GM_VISITORMEALAPPLYFORM"/>
+	<o name="V_SWCS_客饭申请列表信息" type="View" useTo="StandardizedForm" dataType="lb" formId="GM_VISITORMEALAPPLYFORM"/>
+	<!-- 成品校审数据源-->
+	<o name="V_SWCS_成品校审表单信息" type="View" useTo="StandardizedForm" dataType="bd" formId="VerifyRecordCard"/>
+	<o name="V_SWCS_成品校审意见信息" type="View" useTo="StandardizedForm" dataType="lb" formId="VerifyRecordCard"/>
+</root>

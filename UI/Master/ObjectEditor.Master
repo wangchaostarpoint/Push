@@ -1,0 +1,375 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectEditor.Master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.ObjectEditor" %>
+
+<%@ Register Src="~/UI/Controls/SubToolBar.ascx" TagName="SubToolBar" TagPrefix="toolbar" %>
+<%@ Register Src="~/Sys/WorkFlow/Controls/FormWorkflowMapping.ascx" TagName="FormWorkflowMapping"
+    TagPrefix="formworkflowmapping" %>
+<%@ Register Src="~/Sys/FileDocument/AttachmentView.ascx" TagName="AttachmentView"
+    TagPrefix="attachmentView" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=EDGE" />
+    <title></title>
+    <base target="_self" />
+    <link href="../../Themes/styles/objecteditor.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .tz-table
+        {
+            border: #cbccce 1px solid !important;
+        }
+        
+        .td-l
+        {
+            height: 28px !important;
+            border: #cbccce 1px solid !important;
+            background: #f3f4f4;
+        }
+        .td-r
+        {
+            height: 28px !important;
+            border: #cbccce 1px solid !important;
+            background: #fefefe;
+        }
+        .td-m
+        {
+            height: 28px !important;
+            border: #cbccce 1px solid !important;
+            background: #fefefe;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr style="background: #EFF3F6;">
+            <td>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td runat="server" id="tdRelated" style="vertical-align: top;">
+                            <div class="editor-left" style="height: 100%">
+                                <div class="editor-leftmenut">
+                                    <asp:LinkButton runat="server" ID="lbtnBaseInfo" OnClick="lbtnBaseInfo_Click" EnableTheming="false"><span>
+                            <img src="<%=BizPage.WebAppPath %>/themes/images/ico_leftt.gif" /><%=this.Page.Title %></span> 
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="editor-leftmenut">
+                                    <span>
+                                        <img src="<%=BizPage.WebAppPath %>/themes/images/ico_leftt.gif" />关联信息</span>
+                                </div>
+                                <div class="editor-leftmenub">
+                                    <asp:TreeView runat="server" ID="relatedTree" OnSelectedNodeChanged="relatedTree_SelectedNodeChanged">
+                                    </asp:TreeView>
+                                </div>
+                            </div>
+                        </td>
+                        <td id="tdEditor" valign="top">
+                            <div class="editor-right-header" runat="server" id="divRightTitle">
+                                <asp:Label runat="server" ID="lbRelation"></asp:Label>
+                            </div>
+                            <div id="divToolBtn" runat="server" class="subtoolbar" style="border-top: none!important;
+                                border-right: none!important">
+                                <div class="subtoolbarbg" id="divConfigBar" runat="server">
+                                    <toolbar:SubToolBar ID="toolBar" runat="server"></toolbar:SubToolBar>
+                                </div>
+                                <div id="divCustomBar" style="float: left;">
+                                    <div id="btnValidDiv" visible="false" runat="server" class="subtoolbarbg">
+                                        <zhongsoft:LightFileUploader runat="server" ID="attachmentBtn" EnableTheming="false"
+                                            OnClick="attachmentBtn_Click" Visible="false" CssClass="subtoolbarlink">
+               <span> <img src="<%=BizPage.WebAppPath %>/Themes/custom/Images/btn/toolbar_pic/btn_f_fujian.png" width="16" height="16"  />附件</span></zhongsoft:LightFileUploader>
+                                        <asp:LinkButton runat="server" ID="btnValid" EnableTheming="false" OnClick="btnValid_Click"
+                                            Visible="false" CssClass="subtoolbarlink" OnClientClick="return RelateFlow();">
+            <span><img  src="<%=BizPage.WebAppPath %>/Themes/custom/Images/btn/toolbar_pic/btn_connect.png" width="16" height="16" />关联
+                               </span>
+                                        </asp:LinkButton>
+                                    </div>
+                                    <asp:ContentPlaceHolder ID="toolBtn" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </div>
+                                <div id="divSystemBar" class="subtoolbarbg" runat="server" visible="false" style="float: left;">
+                                    <asp:LinkButton runat="server" ID="btnConfig" EnableTheming="false" CssClass="subtoolbarlink"><span>
+                            <img  title="字典配置" src="<%=BizPage.WebAppPath %>/Themes/Images/btn-cfg.gif" width="15" height="15" /></span>
+                                    </asp:LinkButton>
+                                </div>
+                                <div style="clear: both;">
+                                </div>
+                            </div>
+                            <div class="editor-right" runat="server" id="divEditor">
+                                <div id="editor-content" style="width: 99%; height: inherit">
+                                    <asp:ContentPlaceHolder ID="BusinessObjectHolder" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                    <table class="tz-table" runat="server" id="tableAttacth" visible="false">
+                                        <tr>
+                                            <td class="tz-title">
+                                                附件
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="min-height: 20px; width: 100%">
+                                                    <attachmentView:AttachmentView ID="attachmentView" runat="server" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <formworkflowmapping:FormWorkflowMapping ID="formWorkflowMapping" runat="server"
+                                        Visible="false" />
+                                </div>
+                            </div>
+                            <div class="editor-right" runat="server" id="divRelation" visible="false" style="border-top: #C0C3C8 1px solid;
+                                margin-top: 4px;">
+                                <iframe runat="server" id="relationSpace" frameborder="0" width="100%" height="100%">
+                                </iframe>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height: 5px; background: #EFF3F6;">
+            <td>
+            </td>
+        </tr>
+    </table>
+    <div id="saveSuccess" style="display: none" class="ui-state-highlight ui-corner-all">
+        <p>
+            <span class="ui-icon ui-icon-info" style="float: left;"></span>保存成功!</p>
+    </div>
+    <div class="ui-widget">
+        <div id="saveFailed" style="display: none" class="ui-state-error ui-corner-all">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                保存失败!
+            </p>
+        </div>
+    </div>
+    <input type="hidden" runat="server" id="hi_windwo_scroll" />
+    <script type="text/javascript" language="javascript">
+        function configDict(bizId) {
+            var url = buildBizUrl("3", bizId, "bdm/list/DictEditor.aspx", null);
+            showModal(url, null, 1080, 600);
+            return true;
+        }
+
+        function saveData() {
+
+            if (!checkReqField()) {
+
+                return false;
+            }
+            if (typeof (checkForm) == 'function') {
+                if (!checkForm()) return false;
+            }
+
+            if ("<%=actionType %>" == "Create"
+            || "<%=actionType %>" == "Update"
+            || "<%=actionType %>" == "Control"
+            || "<%=actionType %>" == "Delete") {
+                if (parent.returnValue == undefined || parent.returnValue == null) {
+                    parent.returnValue = "Saved";
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function closeSaveData() {
+            if ("<%=actionType %>" == "Create" || "<%=actionType %>" == "Update") {
+                if (!confirm('是否保存再关闭？')) {
+                    if (parent.returnValue == undefined || parent.returnValue == null) {
+                        parent.returnValue = "Cancle";
+                    }
+                    closeWindow();                   
+                    return false;
+                }
+                else {
+                    return saveData();
+                }
+            }
+            //查看状态下直接关闭
+            else {
+                closeWindow();
+                return false;
+            }
+        }
+
+        function deleteData() {
+            if (!window.confirm("您确定删除吗？")) return false;
+            if (parent.returnValue == undefined || parent.returnValue == null) {
+                parent.returnValue = "Deleted";
+            }
+            return true;
+        }
+
+        //Add by xiedx 增加编辑页提交 0531
+        var $catalogID = "";
+        function submitData() {
+            if (!checkReqField()) {
+                return false;
+            }
+            if (typeof (checkForm) == 'function') {
+                if (!checkForm()) return false;
+            }
+            if ("<%=actionType %>" == "Create") {
+                alert("请先保存再提交!")
+                return false;
+            }
+            var url = buildQueryUrl("CatalogTree/Sys/ObjectSender.aspx", { bizId: $bizCtx.bizId, DictCode: "<%=BizPage.DictCode %>", fixedId: $catalogID });
+            showDivDialog(url, null, 650, 440, resetData);
+            return false;
+        }
+
+        function resetData() {
+            if (parent.returnValue) {
+                parent.returnValue = "Saved";
+            }
+            closeWindow();
+            return true;
+        }
+
+        function printPage() {
+            if (typeof (beforePrint) == "function") {//打印前的处理，如果是需要单独做打印页面，可在BeforePrint方法中完成
+                if (!beforePrint())
+                    return false;
+            }
+            window.open(buildQueryUrl("Sys/Workflow/PrintPageDetail.aspx", null));
+        }
+
+        var $hi_windwo_scroll= $("#<%=hi_windwo_scroll.ClientID %>");
+        function initFormPlugin() {
+            $('.editor-right').scroll(function () {   $hi_windwo_scroll.val($(this).scrollTop()); });
+          
+            $('#saveSuccess').dialog({
+                autoOpen: false,
+                resizable: false,
+                minHeight: '50',
+                hide: 'blind',
+                closeText: '',
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveSuccess').dialog("isOpen")) {
+                            $('#saveSuccess').dialog('close');
+                        }
+                    }, 500);
+                }
+            });
+            $('#saveFailed').dialog({
+                autoOpen: false,
+                minHeight: '50',
+                hide: 'blind',
+                resizable: false,
+                modal: true,
+                closeText: '',
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveFailed').dialog("isOpen")) {
+                            $('#saveFailed').dialog('close');
+                        }
+                    }, 2000);
+                }
+            });
+            if (typeof $actionResult != "undefined") {
+                if ($actionResult.r != -999) {
+                    if ($actionResult.ErrCode == 0) $('#saveSuccess').dialog('open');
+                    else {
+                        $('<p>' + $actionResult.Msg + '</p>').appendTo($('#saveFailed'));
+                        $('#saveFailed').dialog('open');
+                    }
+                    $actionResult.r = -999;
+                }
+            }
+            $('.tabs-title li a').click(function () {
+                var id = $(this).attr('href');
+                $(id).css('display', '').siblings('div').css('display', 'none');
+                $(this).addClass('tabs-tlink').parent('li').siblings('li').children('a').removeClass('tabs-tlink');
+            });
+
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+                //保持header样式，不做隐藏，对div内容清空，高度降低
+                $('#<%=divRightTitle.ClientID %>').text('');
+                $('#<%=divRightTitle.ClientID %>').height(0.1);
+            }
+
+            setSize();
+            if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+                document.body.onresize = setSize;
+            } else {
+                window.onresize = setSize;
+            }
+
+            if ($hi_windwo_scroll.val() != "") {
+                $('.editor-right').scrollTop($hi_windwo_scroll.val());
+            }
+
+        }
+
+        //页面窗体大小变化时，根据窗体大小改变内容控件大小
+        function setSize() {
+
+            var rigththeader = $(".editor-right-header").height() + $("#<%=divToolBtn.ClientID %>").height(); //右侧标题高度
+            if (rigththeader == null)
+                rigththeader = 0;
+
+            var widthpadding = 6; //统一与窗体边框间隔大小
+            var heightpadding = 13;
+            if ($('.editor-left').length == 0) {
+                $('.editor-right').height(($(window).height() - rigththeader - heightpadding) + 'px');
+                $('.editor-right').width(($(window).width()) + 'px');
+                $("#<%=relationSpace.ClientID %>").height($('.editor-right').height() + 'px');
+            }
+            else {
+                $('.editor-right').height(($(window).height() - rigththeader - heightpadding) + 'px');
+                $('.editor-right').width(($(window).width() - $('.editor-left').width() - widthpadding) + 'px');
+                $('.editor-left').height((rigththeader + $('.editor-right').height()) + 'px');
+
+                $("#<%=relationSpace.ClientID %>").height($('.editor-right').height() + 'px');
+            }
+        }
+
+        function showTriggerWf() {
+            showModal(buildQueryUrl("Sys/Workflow/TriggerWorkflowInfo.aspx", { bizId: $bizCtx.bizId, DictCode: "<%=BizPage.DictCode %>" }), "", 450, 300)
+        }
+
+        function RelateFlow() {
+            var param = new InputParamObject("m");
+            var re = setWorkflowMapping("re", param, "<%=BizPage.BusinessObjectId %>" + "||" + "<%=BizPage.DictCode %>");
+            if (re != null) {
+                return true;
+            }
+        }
+
+        //批量下载附件
+        function attachmentBatchDown() {
+            var url = "sys/FileDocument/BatchFileDownload.aspx?fileSourceId=" + "<%=BizPage.BusinessObjectId %>";
+            showDivDialog(url, null, 700, 530);
+        }
+        //点击页面右上角的关闭按钮时，提示是否保存再关闭操作
+       function closeSaveDataNew() { 
+            if (typeof (checkForm) == 'function') {
+                if (!checkForm()) return false;
+            }
+            if ("<%=actionType %>" == "Create"
+                || "<%=actionType %>" == "Update"
+                || "<%=actionType %>" == "Control"
+                || "<%=actionType %>" == "Delete") {
+         <%--       //触发保存按钮，进行保存数据--%>
+                __doPostBack('ctl00$toolBar$dlButtons$ctl00$btn', '');
+                if (parent.returnValue == undefined || parent.returnValue == null) {
+                    parent.returnValue = "Saved";
+                }
+                return true;
+            }
+            return false;
+        }
+    </script>
+    </form>
+</body>
+</html>

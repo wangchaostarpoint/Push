@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<!--1、带[ ]者：表示可空缺，有内容时，不带括号出现。
+	    2、带( )者：表示可空缺，有内容时，带括号出现。-->
+	<item Name="分割符" Format="-"></item>
+	<item Name="设计单位代号" Format="**" ContentFormat="0-9" Range="13"></item>
+
+	<item Name="工程类别代号" Format="*"  ContentFormat="A-Z"></item>
+	<item Name="工程代号" Format="***[*]"   ContentFormat="0-9"></item>
+	<item Name="工程期数代号" Format="*[*]"   ContentFormat="0-9" Range="1-99"></item>
+	<item Name="分项工程代号" Format="(*[*])"   ContentFormat="0-9" Range="1-99"></item>
+	<item Name="单项工程代号" Format="E*[*]"   ContentFormat="0-9" Range="1-99"></item>
+	<item Name="设计阶段代号" Format="*"   ContentFormat="A-Z"></item>
+	<item Name="子设计阶段代号" Format="*[*]"   ContentFormat="A-Z,0-9"></item>
+  <item Name="修改版次" Format="[**]"   ContentFormat="0-9" Range="1-99"></item>
+
+	<item Name="综合卷册代号" Format="***"   ContentFormat="A,0-9"></item>
+	<item Name="设计专业代号" Format="*"   ContentFormat="A-Z"></item>
+	<item Name="卷号" Format="**"   ContentFormat="0-9"></item>
+	<item Name="册号" Format="**"   ContentFormat="0-9"></item>
+	<item Name="分册号" Format="(*[*])"   ContentFormat="1-9"></item>
+	<item Name="卷册修改标识" Format="*"   ContentFormat="A-Z"></item>
+
+	<!--电网前期工程图纸顺序号前为：A+两位阿拉伯数字-专业代字-->
+	<item Name="图纸顺序号" Format="**"   ContentFormat="0-9"></item>
+	<item Name="图纸修改标识" Format="*"   ContentFormat="A-Z"></item>
+	<item Name="图幅代号" Format="(*/*)"   ContentFormat="0-9"></item>
+
+	<item Name="工程编号" Format="工程类别代号+工程代号+工程期数代号+[分项工程代号]+[单项工程代号]+设计阶段代号+[子设计阶段代号]"></item>
+	<item Name="卷册编号" Format="[综合卷册代号]+[设计专业代号]+[卷号]+[册号]+[分册号]+[卷册修改标识]"></item>
+	<item Name="成品编号" Format="图纸顺序号+[图纸修改标识]+[图幅代号]"></item>
+	<item Name="统一编号" Format="工程类别代号+工程代号+工程期数代号+[分项工程代号]+[单项工程代号]+设计阶段代号+[子设计阶段代号]+[分割符]+[综合卷册代号]+[设计专业代号]+[卷号]+[册号]+[分册号]+[卷册修改标识]+[分割符]+[图纸顺序号]+[图纸修改标识]+[图幅代号]"></item>
+  <!-- add by weihc on 20091229 生产任务管理流程选择工程编号-->
+  <item Name="工程号" Format="工程类别代号+工程代号+工程期数代号+[分项工程代号]+[单项工程代号]+[设计阶段代号]+[子设计阶段代号]"></item>
+</root>

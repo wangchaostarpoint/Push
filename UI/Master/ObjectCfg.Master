@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectCfg.master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.ObjectCfg" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link href="../../Themes/Styles/objectselector.css" rel="stylesheet" type="text/css" />
+    <base target="_self" />
+</head>
+<body class="selector-body">
+    <form id="form1" runat="server">
+    <div id="divExplain" class="selector-explanation">
+        <div style="font-weight: bold; font-size: 14px" id="divTitle">
+            <%=this.Page.Title %>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="toolTip" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    <div id="divtopBar">
+        <asp:ContentPlaceHolder ID="topBar" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="divContent" style="overflow-x: hidden;">
+        <asp:ContentPlaceHolder ID="Content" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="divbottomBar" class="selector-list" style="text-align: center">
+        <asp:ContentPlaceHolder ID="bottomBar" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <script>
+        function initFormPlugin() {
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+                $('#divTitle').hide();
+            }
+
+            setSize();
+            //IE11下会造成死循环 by sunan
+            //if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+            //    document.body.onresize = setSize;
+            //} else {
+            //    window.onresize = setSize;
+            //}
+        }
+
+        function setSize() {
+            var padding = 40; //边距
+            $("#divContent").height($(window).height() - $("#divExplain").height() - $("#divtopBar").height() - $("#divbottomBar").height() - padding);
+        }
+
+    </script>
+</body>
+</html>

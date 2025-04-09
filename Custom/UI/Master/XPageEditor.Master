@@ -1,0 +1,124 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="XPageEditor.master.cs"
+    Inherits="Zhongsoft.Portal.BDM.UI.Master.XPageEditor" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <base target="_self" />
+    <title></title>
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="kpms-selectbody" style="overflow: scroll; overflow-x: hidden">
+    <script type="text/javascript" language="javascript">
+        //只要点击了保存或保存并新建，让页面关闭后返回的值不为null by liuc
+        function Save() {
+            if (!checkReqField()) {
+                return false;
+            }
+            if (typeof (KPMSCheckSubmit) == 'function') {
+                if (!KPMSCheckSubmit()) return false;
+            }
+
+            if (typeof (savePageView) == 'function') {
+                savePageView();
+            }
+            if ("<%=actionType %>" == "Create"
+            || "<%=actionType %>" == "Update"
+            || "<%=actionType %>" == "Control"
+            || "<%=actionType %>" == "Delete") {
+                if (parent.returnValue == undefined || parent.returnValue == null) {
+                    parent.returnValue = "isSave";
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function initFormPlugin() {
+            $('#saveSuccess').dialog({
+                autoOpen: false,
+                resizable: false,
+                minHeight: '50',
+                hide: 'blind',
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveSuccess').dialog("isOpen")) {
+                            $('#saveSuccess').dialog('close');
+                        }
+                    }, 1000);
+                }
+            });
+            $('#saveFailed').dialog({
+                autoOpen: false,
+                minHeight: '50',
+                hide: 'blind',
+                resizable: false,
+                modal: true,
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        if ($('#saveFailed').dialog("isOpen")) {
+                            $('#saveFailed').dialog('close');
+                        }
+                    }, 3000);
+                }
+            });
+            if (typeof (success) != "undefined") {
+                if (success == "1") { $('#saveSuccess').dialog('open'); success = ""; }
+                else if (success == "0") {
+                    $('<p>' + errormsg + '</p>').insertAfter($('#saveFailed'));
+                    $('#saveFailed').dialog('open');
+                    success = "";
+                }
+            }
+
+            //dialog显示当前title
+            if ("<%=DIALOG_MODE%>" == "Dialog") {
+                setDialogTitle('<%=PARAM_HI_ID%>');
+            }
+        }
+    </script>
+    <form id="form1" runat="server">
+    <table class="tz-table">
+        <tr>
+            <td align="left">
+                <img src="../../ui/images/titleimg.gif" />
+            </td>
+            <td align="right" style="padding-right: 20px;">
+                <asp:LinkButton runat="server" class="kpms-btn" ID="btnView" OnClientClick="return viewForm()">
+                    <img alt =""  src="../../../Themes/Images/btn_search.gif"/><span>预览</span>
+                </asp:LinkButton>
+                <asp:LinkButton CssClass="kpms-btn" runat="server" ID="LinkSave" OnClick="LinkSave_Click"
+                    OnClientClick="return Save();">
+				<img src="../../../Themes/Images/btn_tb_save.gif"   border="0" /><span>保存</span></asp:LinkButton>
+                <asp:LinkButton CssClass="kpms-btn" runat="server" ID="LinkClose" OnClientClick="window.close();return false;">
+				<img src="../../../Themes/Images/btn_tb_close.gif"   border="0"/><span>关闭</span></asp:LinkButton>
+            </td>
+        </tr>
+        <tr>
+            <td class="kpms-rollistcontent" valign="top" id="tdContent" colspan="2">
+                <asp:ContentPlaceHolder ID="BusinessObjectHolder" runat="server">
+                </asp:ContentPlaceHolder>
+            </td>
+        </tr>
+    </table>
+    <div id="saveSuccess" style="display: none" class="ui-state-highlight ui-corner-all">
+        <p>
+            <span class="ui-icon ui-icon-info" style="float: left;"></span>保存成功!</p>
+    </div>
+    <div class="ui-widget">
+        <div id="saveFailed" style="display: none" class="ui-state-error ui-corner-all">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                保存失败!
+            </p>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,360 @@
+html {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+body {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+div {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+span {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+applet {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+object {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+iframe {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h1 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h2 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h3 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h4 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h5 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+h6 {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+p {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+blockquote {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+pre {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+a {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+abbr {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+acronym {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+address {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+big {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+cite {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+code {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+del {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+dfn {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+em {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+font {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+img {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+ins {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+kbd {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+q {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+s {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+samp {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+small {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+strike {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+strong {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+sub {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+sup {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+tt {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+var {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+b {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+u {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+i {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+center {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+dl {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+dt {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+dd {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+ol {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+ul {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+li {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+fieldset {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+form {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+label {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+legend {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+table {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+caption {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+tbody {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+tfoot {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+thead {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+tr {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+th {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+td {
+	background: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; border-image: none; font-size: 100%; vertical-align: baseline;
+}
+body {
+	line-height: 1;
+}
+ol {
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+blockquote {
+	quotes: none;
+}
+q {
+	quotes: none;
+}
+blockquote::before {
+	content: none;
+}
+blockquote::after {
+	content: none;
+}
+q::before {
+	content: none;
+}
+q::after {
+	content: none;
+}
+:focus {
+	outline: 0px;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+a {
+	color: rgb(255, 255, 255); text-decoration: none;
+}
+body {
+	background: rgb(255, 255, 255); color: rgb(51, 51, 51); font-family: "Kreon"; font-weight: 300;
+}
+#switcher {
+	background: rgb(0, 0, 0); top: 0px; width: 100%; height: 54px; position: fixed; z-index: 99999;
+}
+.center {
+	width: 100%; padding-top: 0px;
+}
+.center ul li {
+	float: left; display: inline; position: relative;
+}
+.logoTop {
+	color: rgb(255, 255, 255); font-family: "Î¢ÈíÑÅºÚ"; font-weight: bold; margin-top: 20px; margin-left: 30px;
+}
+.top2 {
+	color: rgb(255, 255, 255); font-family: "Î¢ÈíÑÅºÚ"; font-weight: bold; margin-top: 20px; margin-left: 30px;
+}
+.top2 {
+	background-position: 3px; border-radius: 5px; border: 1px solid rgb(65, 65, 65); border-image: none; height: 20px; line-height: 20px; padding-right: 5px; padding-left: 25px; font-size: 12px; font-weight: normal; margin-top: 16px; position: relative; background-image: url("../i/2vm.png"); background-repeat: no-repeat;
+}
+.vm {
+	padding: 30px; left: 0px; top: 20px; width: 150px; height: 170px; display: none; position: absolute; background-color: rgb(255, 255, 255);
+}
+.top2:hover .vm {
+	display: block;
+}
+.logoTop a:hover {
+	text-decoration: underline;
+}
+li.remove_frame {
+	margin-right: 30px; margin-left: 17px; float: right !important;
+}
+li.remove_frame a {
+	background: url("../i/cross2.png") no-repeat 0px 0px; transition:0.3s ease-out; width: 20px; height: 21px; margin-top: 18px; display: block;
+}
+li.remove_frame a:hover {
+	background-position: 0px -21px;
+}
+#iframe {
+	margin-top: 0px;
+}
+.icon-monitor {
+	background: url("../i/mon-spr.png") no-repeat; width: 17px; height: 16px; margin-top: 20px; margin-right: 7px;
+}
+.icon-tablet {
+	background: url("../i/mon-spr.png") no-repeat; width: 17px; height: 16px; margin-top: 20px; margin-right: 7px;
+}
+.icon-mobile-1 {
+	background: url("../i/mon-spr.png") no-repeat; width: 17px; height: 16px; margin-top: 20px; margin-right: 7px;
+}
+.icon-mobile-2 {
+	background: url("../i/mon-spr.png") no-repeat; width: 17px; height: 16px; margin-top: 20px; margin-right: 7px;
+}
+.icon-mobile-3 {
+	background: url("../i/mon-spr.png") no-repeat; width: 17px; height: 16px; margin-top: 20px; margin-right: 7px;
+}
+.icon-monitor {
+	background-position: 0px 0px; margin-left: 10px;
+}
+.icon-tablet {
+	background-position: -24px 0px;
+}
+.icon-mobile-1 {
+	background-position: -49px 0px;
+}
+.icon-monitor:hover {
+	background-position: 0px -16px;
+}
+.active.icon-monitor {
+	background-position: 0px -16px;
+}
+.icon-tablet:hover {
+	background-position: -24px -16px;
+}
+.active.icon-tablet {
+	background-position: -24px -16px;
+}
+.icon-mobile-1:hover {
+	background-position: -49px -16px;
+}
+.active.icon-mobile-1 {
+	background-position: -49px -16px;
+}
+.icon-mobile-2 {
+	background-position: -71px 0px;
+}
+.icon-mobile-3 {
+	background-position: -94px 0px;
+}
+.icon-mobile-2:hover {
+	background-position: -71px -16px;
+}
+.active.icon-mobile-2 {
+	background-position: -71px -16px;
+}
+.icon-mobile-3:hover {
+	background-position: -94px -16px;
+}
+.active.icon-mobile-3 {
+	background-position: -94px -16px;
+}
+#iframe-wrap {
+	top: 54px; height: 100%; overflow: visible; position: relative; z-index: 50;
+}
+.tablet-width {
+	background: url("../i/bg-mob.png") no-repeat 0px 0px; margin: 40px auto 0px; padding: 175px 100px 115px; width: 785px; height: 960px !important;
+}
+.tablet-width iframe {
+	height: 960px !important;
+}
+.mobile-width {
+	background: url("../i/bg-mob.png") no-repeat 0px -1249px; margin: 40px auto 0px; padding: 165px 115px 100px 100px; width: 1041px; height: 703px !important;
+}
+.mobile-width iframe {
+	height: 704px !important;
+}
+.mobile-width-2 {
+	background: url("../i/bg-mob.png") no-repeat 0px -2217px; margin: 40px auto 0px; padding: 125px 25px 159px; width: 337px; height: 417px !important;
+}
+.mobile-width-2 iframe {
+	height: 416px !important;
+}
+.mobile-width-3 {
+	background: url("../i/bg-mob.png") no-repeat -387px -2217px; margin: 40px auto 0px; padding: 45px 115px 69px 105px; width: 497px; height: 256px !important;
+}
+.mobile-width-3 iframe {
+	height: 256px !important;
+}
+#by {
+	-ms-overflow-y: hidden;
+}

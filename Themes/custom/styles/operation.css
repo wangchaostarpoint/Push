@@ -1,0 +1,277 @@
+/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
+body,button,input,select,textarea{font:14px/1.5 arial,\5b8b\4f53,sans-serif}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+a{text-decoration:none; cursor:pointer;}
+a:hover{text-decoration:underline}
+table{border-collapse:collapse;border-spacing:0; margin-bottom:5px; margin-top:5px;}
+.header{ color:#636363; background:#ededed;}
+
+
+
+#page,#header,#content,#footer{margin-left:auto;margin-right:auto}
+#page{background-color:#f5f5f5;padding-top:20px}
+#content-wrap{margin:0 auto 0 auto;width:1137px;border:1px solid #e5e5e5;background:#fff}
+
+.main-body{background:#fff;padding:0 30px 0 30px;clear:both;border-top:0;margin-top:0;zoom:1;padding-top:25px;width:99%;}
+.text{ line-height:24px;}
+h1,h2{padding:0; margin:0;}
+h1.title{font-family:微软雅黑,黑体,Verdana;font-size:34px;line-height:34px;margin-bottom:18px;color:#000;font-weight:500;z-index:0;position:relative;overflow:hidden;zoom:1;float:left;+margin-top:25px;clear:right}
+h1.title .lemmaTitleH1{float:left;height:100%;padding:0 0 5px 0}
+h1.title .lemmaTitleH1 span{font-size:20px;line-height:20px}
+.article{ font-size:14px;}
+
+
+.z-catalog{z-index:0;position:relative;background:#fbfbfb url(../images/cate_top_06_391b8d2d.png) 0 0 no-repeat;width:100%;overflow:hidden;margin-top:30px;padding-top:6px;clear:both}
+.z-catalog h2{float:left;width:83px;_width:80px;height:100%;background:#fbfbfb;font-size:20px;color:#333;font-family:微软雅黑,黑体,sans-serif;padding-top:22px;line-height:22px;font-weight:200;text-align:center;position:relative;_height:1px}
+.z-catalog h2 span{display:block;width:64px;height:48px;position:absolute;top:12px;right:-1px;_right:-4px;background:#64a0de;color:#fff;border-right:3px solid #4c88c7;font-size:18px;line-height:48px;zoom:1}
+.z-catalog-i1{position:relative;padding-left:25px;display:block;zoom:1}
+.z-catalog-i1 a{font-size:16px;font-weight:500;color:#136ec2;text-decoration:none;background-color:#fff;padding-right:10px;font-family:微软雅黑,黑体}
+.z-catalog-i1 a:link{color:#136ec2}
+.z-catalog-i1 a:visited{color:#136ec2}
+.z-catalog-i1 a:hover{color:#136ec2;text-decoration:underline}
+.catalog-item-index1{position:absolute;left:0;top:0;width:18px;color:#63a0df;font-size:16px;padding-right:8px;text-align:right;display:inline-block}
+.catalog-item ol{padding-left:30px}
+#lemma-catalog-bottombg{height:6px;font-size:6px;width:100%;line-height:6px;background:transparent url(../images/cate_bottom_19_4253ed7c.png) 0 0 repeat-x;clear:both}
+
+
+.z-catalog dl {
+	BORDER-LEFT: #ebebeb 1px solid; PADDING-BOTTOM: 6px; MIN-HEIGHT: 60px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; PADDING-TOP: 6px
+}
+.z-catalog .hideholder {
+	HEIGHT: 100%; OVERFLOW: hidden
+}
+
+.lie3 {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 13px; WIDTH: 29%; PADDING-RIGHT: 10px; FLOAT: left; BORDER-RIGHT: #f5f5f5 1px solid; PADDING-TOP: 0px
+}
+
+.z-catalog .catalog-item {
+	PADDING-BOTTOM: 2px; LINE-HEIGHT: 20px; MARGIN-TOP: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 2px
+}
+
+.z-catalog .er{font-size:14px;color:#333;padding:3px 0 2px 26px;line-height:16px}
+.z-catalog .hold-catalog-li span{color:#ccc;padding-right:5px}
+.z-catalog .hold-catalog-li a{color:#333;text-decoration:none}
+.z-catalog .hold-catalog-li a:link{color:#333}
+.z-catalog .hold-catalog-li a:visited{color:#333}
+.z-catalog .hold-catalog-li a:hover{color:#136ec2;text-decoration:underline}
+.z-catalog .hold-catalog-li a:active{color:#333}
+
+
+.lemma-main-content{overflow:hidden;float:left;outline:0;padding-bottom:16px;width:900px;position:relative;left:-30px;padding-left:30px;_left:0;_padding-left:0}
+.lemma-main-content:focus{outline:0}
+.lemma-main-content table.editorTable{border:1px #888 solid;border-collapse:collapse;margin-bottom:2px;word-wrap:break-word;word-break;break-all}
+.lemma-main-content table.editorTable td{border:1px #888 solid;border-collapse:collapse}
+.anchor-list{clear:both;position:relative;}
+
+
+.text .headline-1{display:block;font-size:24px;font-family:微软雅黑,黑体,Verdana;font-weight:500;line-height:22px;margin:35px 0 15px -30px;clear:both;zoom:1;background:url(../images/titleEditLine.png);overflow:hidden;position:relative}
+.headline-1-index{width:25px;height:24px;line-height:24px;font-size:16px;display:block;float:left;margin:1px 0 0 0;background:#519cea;color:#fff;text-align:center;border-radius:0 2px 2px 0}
+.text .headline-1 .headline-content{line-height:24px;display:block;float:left;padding:0 8px 0 5px;background:#fff}
+.editable-title{display:block;float:right;background:#fff;padding:6px 0 0 8px;_width:50px}
+.text .headline-content img,.empty_content{display:none}
+
+.text_edit a{height:15px;line-height:16px;padding-left:18px;background:transparent url(../images/icon-view_4b787901.gif) no-repeat -85px 1px;font-size:12px;color:#888;font-family:"宋体";text-decoration:none;display:block}
+.text_edit a:hover{background:transparent url(../images/icon-view_4b787901.gif) no-repeat -85px -146px;text-decoration:none}
+.text_edit a,.text_edit a:hover{_background-image:url(../images/icon-view_4b787901.gif)}
+
+.lemma-main-content .headline-2{font-size:20px;font-family:微软雅黑,黑体,Verdana;line-height:19px;margin:20px 0 12px 0;clear:both;font-weight:500;}
+.lemma-main-content .headline-3{font-size:18px;font-family:微软雅黑,宋体,Verdana;line-height:24px;margin:20px 0 12px 0;clear:both;font-weight:500}
+.index{ color:#bbb; font-size:18px; padding-right:5px; border-bottom:#ececec 1px solid;}
+/*段落内容*/
+.text .para{color:#333;margin:15px 0 5px 0;text-indent:2em;line-height:24px}
+.para{ padding-top:5px; padding-bottom:5px;}
+/*段落内容有表格*/
+.lemma-main-content table.table-view {LINE-HEIGHT: 22px; MARGIN: 25px 0px; BORDER-COLLAPSE: collapse; WORD-WRAP: break-word; COLOR: #000; FONT-SIZE: 14px; WORD-BREAK: break-all}
+.lemma-main-content td {BORDER-BOTTOM: #bbb  1px solid; BORDER-LEFT: #bbb  1px solid; PADDING-BOTTOM: 2px; LINE-HEIGHT: 22px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; HEIGHT: 22px; FONT-SIZE: 14px; BORDER-TOP: #bbb  1px solid; BORDER-RIGHT: #bbb  1px solid; PADDING-TOP: 2px}
+
+/*右侧导航效果*/
+#sideToolbar-up {
+    background:url(../images/sideToolbar.png) no-repeat scroll -1px -62px;
+/*rgba(0, 0, 0, 0);*/
+    border-radius: 2px;
+    display: block;
+    height: 45px;
+    margin-left: 10px;
+    width: 45px;
+}
+#sideToolbar-up:hover {
+    background:transparent url(../images/sideToolbar.png) -74px -62px no-repeat
+}
+.sideCatalogBtnDisable {
+    background:transparent url(../images/sideToolbar.png) -104px 0 no-repeat!important
+}
+a.sideCatalogBtnDisable:hover {
+    background:transparent url(../images/sideToolbar.png) -154px 0 no-repeat!important
+}
+#sideCatalogBtn {
+    background: url(../images/sideToolbar.png) no-repeat scroll 0 0;
+    cursor: pointer;
+    height: 45px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    position: relative;
+    width: 45px;
+    display: block;
+}
+
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-bottom {
+    bottom: 0;
+}
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-top, #sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-bottom {
+    background: url(../images/sideToolbar.png) no-repeat scroll 0 -199px;
+    /*rgba(0, 0, 0, 0);*/
+    height: 10px;
+    left: -5px;
+    overflow: hidden;
+    position: absolute;
+    width: 10px;
+}
+
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-top {
+    cursor: pointer;
+    top: 0;
+}
+
+#sideCatalog-catalog {
+    height: 230px;
+    top: 18px;
+    overflow: hidden;
+    padding-left: 23px;
+    position: relative;
+}
+#sideCatalog-catalog dl {
+    position: relative;
+}
+
+#sideCatalog span.sideCatalog-index1 {
+    color: #999999;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+#sideCatalog .sideCatalog-item1 a {
+    color: #555555;
+    font-weight: bold;
+}
+#sideCatalog .sideCatalog-item1 a, #sideCatalog .sideCatalog-item2 a {
+    text-decoration: none;
+}
+.sideCatalog-dot {
+    background: url(../images/sideToolbar.png) repeat scroll 0 -222px;
+/*rgba(0, 0, 0, 0);*/
+    cursor: pointer;
+    font-size: 12px;
+    height: 10px;
+    left: -20px;
+    line-height: 12px;
+    overflow: hidden;
+    position: absolute;
+    top: 4px;
+    width: 6px;
+}
+
+#sideCatalog .sideCatalog-item2 span.sideCatalog-dot {
+}
+#sideCatalog .highlight span.sideCatalog-dot {
+    background: url(../images/sideToolbar.png) no-repeat scroll -271px -38px;
+/*rgba(0, 0, 0, 0);*/
+    height: 13px;
+    left: -23px;
+    top: 3px;
+    width: 18px;
+}
+
+#sideCatalog #sideCatalog-sidebar {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #EAEAEA;
+    border-color: -moz-use-text-color #EAEAEA;
+    border-image: none;
+    border-left: 1px solid #EAEAEA;
+    border-right: 1px solid #EAEAEA;
+    border-style: none solid;
+    border-width: 0 1px;
+    height: 258px;
+    left: 5px;
+    position: absolute;
+    top: 0;
+    width: 0;
+}
+#sideCatalog-updown {
+    bottom: 160px;
+    height: 50px;
+    position: absolute;
+    right: 60px;
+    width: 22px;
+    z-index: 100;
+}
+
+#sideCatalog-up {
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+}
+.sideCatalog-up-disable {
+    background: url(../images/sideToolbar.png) no-repeat scroll -272px -83px;
+/*rgba(0, 0, 0, 0);*/
+}
+
+#sideCatalog-down {
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+}
+.sideCatalog-down-enable {
+    background: url(../images/sideToolbar.png) no-repeat scroll -245px -108px;
+/*rgba(0, 0, 0, 0);*/
+}
+#sideCatalog {
+    font-family: '宋体';
+    font-size: 14px;
+    height: 260px;
+    left: -10px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+    width: 290px;
+}
+
+.sideCatalog-item2 {
+    padding-left: 21px;
+}
+.sideCatalog-item1, .sideCatalog-item2 {
+    margin: 0 0 6px;
+    padding: 0 7px;
+    position: relative;
+}
+.sideCatalog-down-disable {
+    background: url(../images/sideToolbar.png) no-repeat scroll -272px -108px;
+/*rgba(0, 0, 0, 0);*/
+}
+.sideCatalog-up-enable {
+    background: url(../images/sideToolbar.png) no-repeat scroll -245px -83px;
+/*rgba(0, 0, 0, 0);*/
+}
+
+
+.sideCatalog-item2 .sideCatalog-dot {
+    background: none repeat scroll 0 center;
+/*rgba(0, 0, 0, 0);*/
+}
+#sideCatalog-catalog dl dd:hover{
+    background-color: #f6f6f6;
+}
+
+.anchor-1, .anchor-2{
+    display: block;
+    position: relative;
+}
+
+

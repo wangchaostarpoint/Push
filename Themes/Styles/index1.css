@@ -1,0 +1,144 @@
+.header {
+    position: relative;
+}
+
+.header-logo img {
+    margin: 35px 0;
+    height: auto;
+}
+
+.header-logo span {
+    margin-left: 20px;
+    padding-left: 30px;
+    border-left: 2px solid #000000;
+    cursor: default;
+    position: relative;
+    top: 3px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.header-nav {
+    right: 0;
+    text-align: right;
+    top: 42px;
+    width: 300px;
+    position: absolute;
+}
+
+    .header-nav a {
+        margin-right: 5px;
+        color: #000000;
+        font-size: 12px;
+    }
+
+        .header-nav a:hover {
+            text-decoration: none;
+            color: #337ab7;
+        }
+
+.banner {
+    width: 100%;
+    height: 500px;
+    background: url(../Images/login/banner.jpg) no-repeat;
+    background-size:cover;
+    position: relative;
+    z-index: 0;
+}
+
+.banner-bottom {
+    width: 100%;
+    height: 301px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    /*background: url(../img/bg-bottom.png) repeat-x;*/
+    z-index: 1;
+}
+
+.banner-top {
+    width: 100%;
+    height: 194px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    /*background: url(../img/bg-top.png) repeat-x;*/
+    z-index: 1;
+}
+
+.banner-shadow {
+    width: 100%;
+    height: 48px;
+    background: url(../Images/login/banner-shdow.png) repeat-x;
+}
+
+.banner-text {
+    position: absolute;
+    z-index: 2;
+    left: 10%;
+    top: 120px;
+    cursor: default;
+    color: #000000;
+}
+
+.text-1 {
+    font-size: 2em;
+    color: #000000;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-top:40px;
+}
+
+.login-aside {
+    position: absolute;
+    width: 320px;
+    height: 255px;
+    border-radius: 5px;
+    z-index: 2;
+    right: 10%;
+    top: 120px;
+}
+
+.login-bg {
+    background: #175eac;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+}
+
+.login-bg,
+.login-form {
+    position: absolute;
+    width: 320px;
+    height: 255px;
+    border-radius: 5px;
+    padding: 35px;
+}
+
+    .login-form button {
+        width: 100%;
+    }
+
+.footer {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.form-group label {
+    color: #FFFFFF;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+#btnLogin {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+    #btnLogin:hover span {
+        color: #ffffff;
+    }

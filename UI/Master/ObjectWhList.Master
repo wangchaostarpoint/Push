@@ -1,0 +1,400 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ObjectWhList.Master.cs"
+    Inherits="Zhongsoft.Portal.UI.Master.ObjectWhList" %>
+
+<%@ Register Src="~/UI/Controls/SubToolBar.ascx" TagName="SubToolBar" TagPrefix="toolbar" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <%--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />--%>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title></title>
+
+    <base target="_self" />
+    <link href="../../Themes/Styles/objectlist.css" rel="stylesheet" type="text/css" />
+    <link href="../../Themes/Styles/objfilter.css" type="text/css" rel="Stylesheet" />
+    <style>
+        body {
+            background: #fff;
+            overflow-y: hidden;
+            font: 12px/1.5 tahoma,arial,\5b8b\4f53;
+        }
+
+        .subtoolbarlink span {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body onkeydown="search();">
+    <% 
+        //仪表板隐藏模板页工具条
+        if (IsDashboard != "1" && IsModalDialog != "1")
+        {
+    %>
+    <style>
+        body {
+            min-width: 800px;
+            background: #fff; /*加了背景白色，适应新平台页面*/
+            overflow-y: hidden;
+        }
+
+        #divBars {
+            min-width: 800px;
+        }
+    </style>
+    <%
+        } //仪表板隐藏模板页工具条-end
+    %>
+    <form id="form2" runat="server"  defaultbutton="btnQuery">
+        <asp:ScriptManager runat="server">
+        </asp:ScriptManager>
+        <table class="tz-table" cellpadding="0" cellspacing="0" style="margin-top: 5px;">
+            <tr>
+                <td width="15%" valign="top" class="list-tree" id="tdTree" style="display: none;">
+                    <div id="divTree" style="width: 100%; overflow-y: auto; overflow-x: auto; height: 300px">
+                        <asp:ContentPlaceHolder ID="treeView" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </td>
+                <td valign="top" style="padding-left: 3px; padding-right: 12px;">
+                    <div id="divBars" style="width: 100%;">
+                        <table class="subtoolbar" border="0" cellpadding="0" cellspacing="0" id="tbQuery"
+                            width="99.5%" style="margin-bottom: 3px; margin-left: 4px;">
+                            <tr id="trQuery" runat="server">
+                                <td colspan="2">
+                                    <div style="width: 100%; float: left; padding-top: 3px;">
+                                        <fieldset class="rtm_fds_bd" id="Fieldset1" style="display: block; background: #fff; border: #d5dfe5 1px solid;">
+                                            <legend class="rtm_fds_tle">
+                                                <div id="toolbarlay">
+                                                    <%=this.Page.Title %>
+                                                </div>
+                                            </legend>
+                                            <div style="background-color: #EFF2F7;" id="divQuery">
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 0px;">
+                                                    <tr id="trleader">
+                                                        <td class="subtoolbarbg" id="tdTitle" style="display: none;">
+                                                            <span class="list-title" style="line-height: 26px;">
+                                                                <%=this.Page.Title %></span>
+                                                        </td>
+                                                        <td>
+                                                            <div id="divToolBtn" style="margin-bottom: 1px; border-top: none; border-left: none; padding-left: 2px;">
+                                                                <div class="subtoolbarbg" id="divConfigBar" runat="server">
+                                                                    <asp:LinkButton runat="server" ID="btnNewSave" CssClass="subtoolbarlink" AccessLevel="2" OnClientClick="return viewEditor(2);" EnableTheming="false">
+                                                                  <span> <img  title="新建" src="<%=BPage.WebAppPath %>/Themes/Images/btn_new.gif" width="15" height="15" />新建</span>
+                                                                    </asp:LinkButton>
+                                                                    <asp:LinkButton runat="server" ID="btnEdit" CssClass="subtoolbarlink" AccessLevel="3" EnableTheming="false" OnClientClick="return viewEditor(3);">
+                                                                  <span> <img  title="编辑" src="<%=BPage.WebAppPath %>/Themes/Images/btn_editor.gif" width="15" height="15" />编辑</span>
+                                                                    </asp:LinkButton>
+                                                                    <asp:LinkButton runat="server" ID="btnView" CssClass="subtoolbarlink" AccessLevel="1" EnableTheming="false" OnClientClick="return viewEditor(1);">
+                                                                  <span> <img  title="查看" src="<%=BPage.WebAppPath %>/Themes/Images/btn_chakan.gif" width="15" height="15" />查看</span>
+                                                                    </asp:LinkButton>
+                                                                    <asp:LinkButton runat="server" ID="btnDelete" AccessLevel="4" CssClass="subtoolbarlink" EnableTheming="false" OnClick="btnDelete_Click" OnClientClick=" return deleteData();">
+                                                                  <span> <img  title="删除" src="<%=BPage.WebAppPath %>/Themes/Images/btn_delete.gif" width="15" height="15" />删除</span>
+                                                                    </asp:LinkButton>
+                                                                </div>
+                                                                <div id="divCustomBar">
+                                                                    <asp:LinkButton runat="server" ID="btnExcel" Visible="false" CssClass="subtoolbarlink" AccessLevel="1" EnableTheming="false">
+                                                                  <span> <img  title="Excel数据导入" src="<%=BPage.WebAppPath %>/Themes/Images/accessory_excel.gif" width="15" height="15" />Excel数据导入</span>
+                                                                    </asp:LinkButton>
+                                                                    <asp:ContentPlaceHolder ID="toolBtn" runat="server">
+                                                                    </asp:ContentPlaceHolder>
+                                                                </div>
+                                                                <div style="clear: both">
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <asp:ContentPlaceHolder ID="toolBar" runat="server">
+                                                </asp:ContentPlaceHolder>
+                                                <div style="float: right; padding-right: 5px; padding-top: 5px;">
+                                                    <asp:LinkButton runat="server" ID="btnQuery" OnClick="btnQuery_Click">
+                      <span content='searchResult'>查询</span>
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton runat="server" ID="btnReset" OnClick="btnReset_Click" Style="margin-left: 0;">
+                    <span>重置</span>
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton runat="server" class="searchbtn" ID="btnAdvSearch" OnClientClick="return advSearch()"
+                                                        Style="margin-left: 0;">
+                     <span>高级查询</span>
+                                                    </asp:LinkButton>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <fieldset class="rtm_fds_bd" id="fsAdvSearch" style="display: none">
+                                        <legend class="rtm_fds_tle">高级查询</legend>
+                                        <div style="background-color: #EFF2F7;">
+                                            <asp:ContentPlaceHolder ID="advSearch" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </div>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="divContent" style="overflow-y: auto; overflow-x: auto;">
+                        <table class="tz-table" border="0" cellpadding="0" cellspacing="0" id="tableContent">
+                            <tr>
+                                <td class="list-content" valign="top">
+                                    <div id="div2">
+                                        <table class="tz-table" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td valign="top" style="padding-left: 3px;">
+                                                    <div style="margin-bottom: 4px;">
+                                                        <!-- 加入UpdatePanel避免回发刷新-->
+                                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                                            <ContentTemplate>
+                                                                <asp:ContentPlaceHolder ID="listGrid" runat="server">
+                                                                </asp:ContentPlaceHolder>
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
+                                                    </div>
+                                                    <div>
+                                                        <asp:ContentPlaceHolder ID="detailContent" runat="server">
+                                                        </asp:ContentPlaceHolder>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!-- 查询区域收起、展开标识-->
+        <input id="hiKeepQuery" type="hidden" name="hiKeepQuery" runat="server" />
+        <!-- 高级查询标识-->
+        <input id="hidKeepAdv" type="hidden" name="hidKeepAdv" runat="server" />
+        <script type="text/javascript">
+
+            var $gridCheckedClientID;
+            var KeyID;
+            var $KeyUrl;
+            //是否流程列表：0-否；1-是
+            var $isFlow;
+            function initFormPlugin() {
+                var t = $("#divTree").html();
+                t = t.replace(/[\r\n]/g, "").replace(/[ ]/g, "");
+                if (t != "") {
+                    //隐藏左侧树
+                    $("#tdTree").show();
+                }
+
+                if ($gridCheckedClientID != undefined) {
+                    var array = buildGirdRowIds($gridCheckedClientID);
+                    checkGridViewRow(array);
+                }
+
+                keepAdvSearch();
+
+                if ($isFlow == "1") {
+                    //流程隐藏编辑和删除
+                    $("#<%=btnEdit.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnDelete.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnNewSave.ClientID %>").hide();
+                    $("#<%=btnEdit.ClientID %>").hide();
+                    $("#<%=btnDelete.ClientID %>").hide();
+                }
+
+                //冻结工具栏  
+                setSize();
+                if (! +"/v1" && !document.querySelector) { // for IE6 IE7   
+                    document.body.onresize = setSize;
+                } else {
+                    window.onresize = setSize;
+                }
+            }
+
+            function checkGridViewRow(array) {
+
+                setEnableScope(JSON.stringify(array));
+            }
+
+            ////向顶部工具条传入参数
+            //function transParamToToolBar(rowIds, param) {
+            //    if (typeof (getGirdParam) == "function") {
+            //        getGirdParam(rowIds, param);
+            //    }
+            //}
+
+            function buildGirdRowIds(gridId) {
+                var array = new Array();
+                var ids = $("#" + gridId).val();
+                if (ids != '') {
+                    array = jQuery.parseJSON(ids);
+                }
+                return array;
+            }
+
+            //default页调用重新绑定列表
+            function rebindGridData() {
+
+             <%=this.Page.GetPostBackEventReference(this.btnQuery,"") %>;
+            }
+
+            function deleteData() {
+                return window.confirm("您确定删除吗？");
+            }
+
+
+            function keepAdvSearch() {
+                if ("1" == $("#<%=hiKeepQuery.ClientID%>").val()) {
+                    $("#divQuery").show();
+                }
+                else if ("0" == $("#<%=hiKeepQuery.ClientID%>").val()) {
+                    $("#divQuery").hide();
+                }
+
+                //高级查询
+                if ("1" == $("#<%=hidKeepAdv.ClientID%>").val()) {
+                    $("#fsAdvSearch").show();
+                }
+            }
+            function advSearch() {
+                var displayStyle = $("#fsAdvSearch").css('display');
+                if (displayStyle == "none") {
+                    displayStyle = "";
+                    $("#<%=hidKeepAdv.ClientID%>").val('1')
+                }
+                else {
+                    displayStyle = "none";
+                    $("#<%=hidKeepAdv.ClientID%>").val('0')
+                }
+                $("#fsAdvSearch").css('display', displayStyle);
+
+                return false;
+            }
+
+
+
+            function showSearch() {
+                var displayStyle = $("#divQuery").css('display');
+                if (displayStyle == "none") {
+                    displayStyle = "";
+                    $("#<%=hiKeepQuery.ClientID%>").val('1')
+                }
+                else {
+                    displayStyle = "none";
+                    $("#<%=hiKeepQuery.ClientID%>").val('0')
+                }
+                $("#divQuery").css('display', displayStyle);
+                return false;
+            }
+
+            function setSize() {
+                var toolbarHeight = $('#divBars').height();
+                var AdvSearchHeight = $('#fsAdvSearch').height();
+                var paddingHeight = 14;
+                //var tooldivHeight = $('#toolDiv').height();
+                //var titledivHeight = $('#metroheader').height();
+                //窗体高度-工具栏高度-间隔高度,Custom\List\DashBoard.aspx的tooldiv与metroheader的高度跨页面读不出来       
+                //Modify by xiedx 160506 toolbarHeight中已包含AdvSearchHeight的高度；
+                $('#divContent').height(($(window).height() - toolbarHeight - paddingHeight) + 'px');
+
+                //单独设置左侧树形区域高度，超出高度显示滚动条 tianhl 20181106
+                $('#divTree').height($(window).height() - 10);
+            }
+
+
+            function setEnableScope(ids) {
+                var rowIds = new Array();
+                if (ids != "") {
+                    rowIds = jQuery.parseJSON(ids);
+                }
+
+                if (rowIds.length == 0) {
+                    $("#<%=btnEdit.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnView.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnDelete.ClientID %>").attr("disabled", "disabled");
+                }
+                else if (rowIds.length == 1) {
+                    if ($isFlow != "1") {
+                        //不是流程设置按钮编辑和删除可用
+                        $("#<%=btnEdit.ClientID %>").removeAttr("disabled");
+                                  $("#<%=btnDelete.ClientID %>").removeAttr("disabled");
+                    }
+                    $("#<%=btnView.ClientID %>").removeAttr("disabled");
+
+                    KeyID = rowIds[0];
+                    //  $single.show('slide');
+                    //  $hasSelect.show('slide');
+                }
+                else {
+                    $("#<%=btnEdit.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnView.ClientID %>").attr("disabled", "disabled");
+                    $("#<%=btnDelete.ClientID %>").removeAttr("disabled");
+                }
+            }
+
+            //弹出事件
+            function viewEditor(actionType) {
+
+                if (typeof (beforeDialog) == "function") {
+                    return beforeDialog(actionType, KeyID);
+                } 
+                var keyUrl = "<%=BPage.WebAppPath %>" + $KeyUrl;
+                var url = buildQueryUrl(keyUrl, { actionType: 2 });
+
+                if ($isFlow != "1" || $isFlow == undefined) {
+                    if (actionType == '1' || actionType == '3') {
+                          if (KeyID == "" || typeof (KeyID) == "undefined") {
+                                    alert("请选择一条记录再点击查看！");
+                                    return false;
+                                }
+                        url = buildQueryUrl(keyUrl, { actionType: actionType, bizId: KeyID });
+
+                    }
+                    showDivDialog(encodeURI(url), null, 1150, 650, rebindGridData);
+                }
+
+                else {
+                    ViewFlow(KeyID);
+                }
+                return false;
+            }
+
+            //查看普通编辑页js
+            function ViewCustomLink(id) {
+                 if (id == "" || typeof (id) == "undefined") {
+                    alert("请选择一条记录再点击查看！");
+                    return false;
+                }
+                var keyUrl = $KeyUrl;
+                url = buildQueryUrl(keyUrl, { actionType: actionType, bizId: id });
+                showDivDialog(encodeURI(url), null, 1150, 800, rebindGridData);
+                return false;
+            }
+
+            //查看流程表单
+            function ViewFlow(id) { 
+                if (id == "" || typeof (id) == "undefined") {
+                    alert("请选择一条记录再点击查看！");
+                    return false;
+                }
+                var urls = buildQueryUrl("/Custom/List/C_FormDetailLoading.aspx", { actionType: "1", bizId: id });
+                window.open(urls);
+                return false;
+            }
+
+
+            //excel弹出事件
+            function showExcelImport(pageId) {
+
+                var urlTemp = "/WHHelper/Sys/Import.aspx";
+                var keyUrl = urlTemp;
+                var url = buildQueryUrl(keyUrl, { pageId: pageId });
+                showDivDialog(encodeURI(url), null, 600, 400, rebindGridData);
+                return false;
+            }
+
+        </script>
+    </form>
+</body>
+</html>

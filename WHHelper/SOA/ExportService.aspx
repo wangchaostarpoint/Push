@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ExportService.aspx.cs" Inherits="Zhongsoft.Portal.WHHelper.SOA.ExportService" %>

@@ -1,0 +1,105 @@
+﻿
+a {
+    text-decoration: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+#MT_nav { /* right:140px;*/
+    position: absolute;
+    z-index: 0;
+}
+    /*在考虑适应分辨率，将该right距离放到了脚本中*/
+
+    #MT_nav .MT-item {
+        list-style: none;
+        /*height:57px;*/
+        top: 0px;
+        position: relative;
+        z-index: 99;
+    }
+
+.MT-arrow {
+    background: url(../images/MT_nav_logo_20131104.png) no-repeat;
+}
+
+#MT_nav .MT-item {
+    width: 122px;
+    height: 55px;
+    /*float:left;*/
+    background-position: -5px 0;
+    top: 0px;
+    position: relative;
+    z-index: 99;
+}
+
+    #MT_nav .MT-item:hover div {
+        display: block;
+        top: 6px;
+        position: relative;
+        z-index: 99;
+    }
+
+    #MT_nav .MT-item #divMore a {
+        /*color:#646464;*/
+        display: block;
+        /*font-size:14px;*/
+        /*height:47px;
+	line-height:47px;
+	_line-height:50px;*/
+        text-align: center;
+        text-decoration: none;
+        /*margin-top:8px;加了更多字样*/
+        color: #2bb1e6;
+    }
+
+        #MT_nav .MT-item #divMore a:hover {
+            /*color:#ff5d71;*/
+            color: #74777b;
+        }
+
+
+    #MT_nav .MT-item div {
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        position: absolute;
+        top: 45px;
+        /*height:160px;太长下边框没有？需要考虑原因，原来不需要设置高度*/
+        left: 50%;
+        margin-left: -49%;
+        -webkit-box-shadow: 0 0 4px rgba(0,0,0,.02),0 2px 5px rgba(0,0,0,.1);
+        -moz-box-shadow: 0 0 4px rgba(0,0,0,.02),0 2px 5px rgba(0,0,0,.1);
+        box-shadow: 0 0 4px rgba(0,0,0,.02),0 2px 5px rgba(0,0,0,.1);
+        width: 98%;
+        text-align: left;
+    }
+
+#MT_nav .MT-arrow {
+    display: block;
+    font-size: 0;
+    height: 7px;
+    position: absolute;
+    top: -7px;
+    width: 14px;
+    margin-left: -7px;
+    left: 50%;
+    background-position: 0 -63px;
+}
+
+#MT_nav .MT-item .MT-list-last {
+    border: none;
+}
+
+#MT_nav .MT-item div a {
+    width: 86%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+    height: 35px;
+    line-height: 35px;
+    /*font-size:14px;*/
+    *zoom: 1;
+}

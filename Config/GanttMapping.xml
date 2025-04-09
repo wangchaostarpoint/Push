@@ -1,0 +1,1243 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataConfigs>
+  <!--工程信息配置，包含：
+  1数据读写配置
+  2任务属性列表自定义列配置
+  3工程访问权限配置
+  4列表列权限配置。-->
+  <ProjectConfigs>
+    <!-- 可以根据不同的要求配置多个ProjectConfig，通过传递不同的Name值获取相应的配置信息-->
+    <!--项目总体计划-->
+    <ProjectConfig Name="OverallProjectPlan">
+      <USPS>
+        <!--读写相应信息的存储过程配置信息
+          1.AccessLevel：存储过程的访问类型，增删改查
+          2.USPName 存储过程名称
+          3.Name USP配置节点名，请确保全局唯一-->
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProject" Name="ReadProject">
+          <Fields>
+            <!--数据表字段与实体属性的对应关系 Name 数据表字段名 Property 实体的属性名称-->
+            <!--工程基本信息目前有且一个存储过程，来读取工程基本信息。
+              目前工程基本信息的只支持以下3个属性。修改Name属性对应数据库对应字段，请勿增加删除节点，或修改Property属性值-->
+            <Field Name="OrganizationID" Property="ID" />
+            <Field Name="ProjectCode" Property="Code" />
+            <Field Name="ProjectName" Property="Name" />
+          </Fields>
+        </USP>
+      </USPS>
+      <AccessLevelConfig>
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProjectAccess" Name="ReadProjectAccess">
+          <Fields>
+            <!--工程Id-->
+            <Field Name="OrganizationID" Property="ID" />
+            <!--工程访问权限-->
+            <Field Name="AccessLevel" Property="AccessLevel" />
+          </Fields>
+        </USP>
+      </AccessLevelConfig>
+      <!--任务在列表中显示标准属性列定义-->
+      <StandardFields>
+        <!--通过Header匹配列表中对应的列，PropName对应任务的属性名称-->
+        <StandardField PropName="TaskCode" Header="序号"/>
+        <StandardField PropName="WBSCode" Header="任务编号"/>
+        <StandardField PropName="Name" Header="任务名称" />
+        <StandardField PropName="Effort" Header="工期" />
+        <StandardField PropName="StartTime" Header="开始时间" />
+        <StandardField PropName="EndTime" Header="结束时间" />
+        <StandardField PropName="Dependencies" Header="前置任务" />
+        <StandardField PropName="Percent" Header="进度" />
+        <StandardField PropName="Resources" Header="资源" />
+      </StandardFields>
+      <!--任务在列表中显示自定义属性列定义-->
+      <CustomFields>
+        <!--FieldId自定义属性ID， 
+            FieldName 属性对应的列名
+            DataType 对应任务的属性数据类型，目前只支持：Text（文本），Numeric（数字），DateTime（日期）
+                     资源类型需要实现对应的资源读写配置-->
+        <!--<CustomField FieldId="PlanHandTime" FieldName="计划个人出手时间" DataType="DateTime"/>
+        <CustomField FieldId="PlanRecheckTime1" FieldName="计划室交出时间" DataType="DateTime"/>-->
+        <CustomField FieldId="MasterDemandSchedule" FieldName="目标时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTimeOfAdjusted" FieldName="调整后计划完成时间" DataType="DateTime"/>
+        <CustomField FieldId="FactStartTime" FieldName="实际开始时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTime" FieldName="实际完成时间" DataType="DateTime"/>
+        <CustomField FieldId="WBSState" FieldName="任务状态" DataType="Text"/>
+      </CustomFields>
+      <!--任务属性读写配置，可针对不同类型的数据来源配置多个TaskConfig添加到同一工程-->
+      <TaskConfigs>
+        <TaskConfig Name="RollTask">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSPlanTasks"  Name="ReadWBSPlanTasks">
+              <!--标准属性数据库字段和任务属性名称对应关系，请勿修改Property属性-->
+              <Fields>
+                <Field Name="WBSID" Property="ID"/>
+                <Field Name="WBSName" Property="Name" />
+                <Field Name="WBSCode" Property="WBSCode" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime" />
+                <Field Name="Effort" Property="Effort" />
+                <Field Name="CompletePercent" Property="Percent" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+              <CustomFields>
+                <!--Name 数据库字段名
+                    Property 自定义属性的ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <!--<Field Name="PlanHandTime" Property="PlanHandTime" />
+                <Field Name="PlanRecheckTime1" Property="PlanRecheckTime1" />-->
+                <Field Name="MasterDemandSchedule" Property="MasterDemandSchedule" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FactCompleteTimeOfAdjusted" />
+                <Field Name="FactStartTime" Property="FactStartTime" />
+                <Field Name="FactCompleteTime" Property="FactCompleteTime" />
+                <Field Name="WBSState" Property="WBSState" />
+              </CustomFields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTasks" Name="UpdateWBSTasks">
+              <Fields>
+                <Field Name="WBSID" Property="ID" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime"  />
+                <!--<Field Name="CompletePercent" Property="Percent" />-->
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskConfig>
+      </TaskConfigs>
+      <!--概要任务数据读写配置，与任务数据读写配置规则一致，同TaskConfig-->
+      <WBSConfigs>
+        <WBSConfig Name="Specialty">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadSpecialWBS"  Name="ReadSpecialWBS">
+              <Fields>
+                <Field Name="ProjectSpecialtyID" Property="ID" PKValue="1" />
+                <Field Name="SpecialtyName" Property="Name" />
+                <Field Name="SpecialtyCode" Property="WBSCode" />
+                <Field Name="StartTime" Property="StartTime" />
+                <Field Name="EndTime" Property="EndTime" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+          </USPS>
+        </WBSConfig>
+      </WBSConfigs>
+      <!--任务关联数据读写配置，目前不支持多个数据来源，请用一张数据表存储任务关联信息-->
+      <TaskRelationConfigs>
+        <TaskRelationConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadTaskRelation" Name="ReadTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateTaskRelation" Name="UpdateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Create" USPName="P_GANTT_CreateTaskRelation" Name="CreateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+                <Field Name="OrganizationID" Property="ProjectId" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Delete" USPName="P_GANTT_DeleteTaskRelation" Name="DeleteTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskRelationConfig>
+      </TaskRelationConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <CustomFieldAccessConfigs>
+        <CustomFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadCustomFields" Name="ReadCustomFieldsAccess" >
+              <Fields>
+                <!--自定义属性ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FieldId" Property="FieldId" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldAccessConfig>
+      </CustomFieldAccessConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <StandardFieldAccessConfigs>
+        <StandardFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadStandardFields" Name="ReadStandardFieldsAccess" >
+              <Fields>
+                <!--标准属性属性名称，与当前工程自定义属性声明的StandardField PropName相对应-->
+                <Field Name="PropName" Property="PropertyName" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </StandardFieldAccessConfig>
+      </StandardFieldAccessConfigs>
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <CustomFieldValueConfigs>
+        <!--计划个人出手时间-->
+        <!--<CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskPHTFields" Name="ReadWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPHTFields" Name="UpdateWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskPRTFields" Name="ReadWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPRTFields" Name="UpdateWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>-->
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskMSDFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSMDSFields" Name="UpdateWBSMDSFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFACTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFCTAFields" Name="UpdateWBSFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFSTFields" FieldId="FactStartTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactStartTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactStartFields" Name="UpdateWBSFactStartFields" FieldId="FactStartTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactStartTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCFFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactComFields" Name="UpdateWBSFactComFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskStateFields" FieldId="WBSState" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="WBSState" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+      </CustomFieldValueConfigs>
+    </ProjectConfig>
+    <ProjectConfig Name="RollAndProductProjectPlan">
+      <USPS>
+        <!--读写相应信息的存储过程配置信息
+          1.AccessLevel：存储过程的访问类型，增删改查
+          2.USPName 存储过程名称
+          3.Name USP配置节点名，请确保全局唯一-->
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProject" Name="ReadProject">
+          <Fields>
+            <!--数据表字段与实体属性的对应关系 Name 数据表字段名 Property 实体的属性名称-->
+            <!--工程基本信息目前有且一个存储过程，来读取工程基本信息。
+              目前工程基本信息的只支持以下3个属性。修改Name属性对应数据库对应字段，请勿增加删除节点，或修改Property属性值-->
+            <Field Name="OrganizationID" Property="ID" />
+            <Field Name="ProjectCode" Property="Code" />
+            <Field Name="ProjectName" Property="Name" />
+          </Fields>
+        </USP>
+      </USPS>
+      <AccessLevelConfig>
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProjectAccess" Name="ReadProjectAccess">
+          <Fields>
+            <!--工程Id-->
+            <Field Name="OrganizationID" Property="ID" />
+            <!--工程访问权限-->
+            <Field Name="AccessLevel" Property="AccessLevel" />
+          </Fields>
+        </USP>
+      </AccessLevelConfig>
+      <!--任务在列表中显示标准属性列定义-->
+      <StandardFields>
+        <!--通过Header匹配列表中对应的列，PropName对应任务的属性名称-->
+        <StandardField PropName="TaskCode" Header="序号"/>
+        <StandardField PropName="WBSCode" Header="任务编号"/>
+        <StandardField PropName="Name" Header="任务名称" />
+        <StandardField PropName="Effort" Header="工期" />
+        <StandardField PropName="StartTime" Header="计划开始时间" />
+        <StandardField PropName="EndTime" Header="计划完成时间" />
+        <StandardField PropName="Dependencies" Header="前置任务" />
+        <StandardField PropName="Percent" Header="进度" />
+        <StandardField PropName="Resources" Header="资源" />
+      </StandardFields>
+      <!--任务在列表中显示自定义属性列定义-->
+      <CustomFields>
+        <!--FieldId自定义属性ID， 
+            FieldName 属性对应的列名
+            DataType 对应任务的属性数据类型，目前只支持：Text（文本），Numeric（数字），DateTime（日期）
+                     资源类型需要实现对应的资源读写配置-->
+        <!--<CustomField FieldId="PlanHandTime" FieldName="计划个人出手时间" DataType="DateTime"/>
+        <CustomField FieldId="PlanRecheckTime1" FieldName="计划室交出时间" DataType="DateTime"/>-->
+        <CustomField FieldId="MasterDemandSchedule" FieldName="目标时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTimeOfAdjusted" FieldName="调整后计划完成时间" DataType="DateTime"/>
+        <CustomField FieldId="FactStartTime" FieldName="实际开始时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTime" FieldName="实际完成时间" DataType="DateTime"/>
+        <CustomField FieldId="WBSState" FieldName="任务状态" DataType="Text"/>
+      </CustomFields>
+      <TaskConfigs>
+        <TaskConfig Name="ProductTask">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadRollTasks"  Name="ReadRollTasks">
+              <!--标准属性数据库字段和任务属性名称对应关系，请勿修改Property属性-->
+              <Fields>
+                <Field Name="WBSID" Property="ID"/>
+                <Field Name="WBSName" Property="Name" />
+                <Field Name="WBSCode" Property="WBSCode" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime" />
+                <Field Name="Effort" Property="Effort" />
+                <Field Name="CompletePercent" Property="Percent" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+              <!--加载时显示的自定义列，目前只支持Read-->
+              <CustomFields>
+                <!--Name 数据库字段名
+                    Property 自定义属性的ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <!--<Field Name="PlanHandTime" Property="PlanHandTime" />
+                <Field Name="PlanRecheckTime1" Property="PlanRecheckTime1" />-->
+                <Field Name="MasterDemandSchedule" Property="MasterDemandSchedule" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FactCompleteTimeOfAdjusted" />
+                <Field Name="FactStartTime" Property="FactStartTime" />
+                <Field Name="FactCompleteTime" Property="FactCompleteTime" />
+                <Field Name="WBSState" Property="WBSState" />
+              </CustomFields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTasks" Name="UpdateWBSTasks">
+              <Fields>
+                <Field Name="WBSID" Property="ID" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime"  />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskConfig>
+      </TaskConfigs>
+      <WBSConfigs>
+        <WBSConfig Name="Specialty">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadSpecialWBS"  Name="ReadSpecialWBS">
+              <Fields>
+                <Field Name="ProjectSpecialtyID" Property="ID" PKValue="1" />
+                <Field Name="SpecialtyName" Property="Name" />
+                <Field Name="SpecialtyCode" Property="WBSCode" />
+                <Field Name="StartTime" Property="StartTime" />
+                <Field Name="EndTime" Property="EndTime" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+          </USPS>
+        </WBSConfig>
+      </WBSConfigs>
+      <!--任务关联数据读写配置，目前不支持多个数据来源，请用一张数据表存储任务关联信息-->
+      <TaskRelationConfigs>
+        <TaskRelationConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadTaskRelation" Name="ReadTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateTaskRelation" Name="UpdateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Create" USPName="P_GANTT_CreateTaskRelation" Name="CreateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+                <Field Name="OrganizationID" Property="ProjectId" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Delete" USPName="P_GANTT_DeleteTaskRelation" Name="DeleteTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskRelationConfig>
+      </TaskRelationConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <CustomFieldAccessConfigs>
+        <CustomFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadCustomFields" Name="ReadCustomFieldsAccess" >
+              <Fields>
+                <!--自定义属性ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FieldId" Property="FieldId" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldAccessConfig>
+      </CustomFieldAccessConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <StandardFieldAccessConfigs>
+        <StandardFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadStandardFields" Name="ReadStandardFieldsAccess" >
+              <Fields>
+                <!--标准属性属性名称，与当前工程自定义属性声明的StandardField PropName相对应-->
+                <Field Name="PropName" Property="PropertyName" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </StandardFieldAccessConfig>
+      </StandardFieldAccessConfigs>
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <CustomFieldValueConfigs>
+        <!--计划个人出手时间-->
+        <!--<CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskPHTFields" Name="ReadWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPHTFields" Name="UpdateWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskPRTFields" Name="ReadWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPRTFields" Name="UpdateWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>-->
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskMSDFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSMDSFields" Name="UpdateWBSMDSFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFACTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFCTAFields" Name="UpdateWBSFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFSTFields" FieldId="FactStartTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactStartTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactStartFields" Name="UpdateWBSFactStartFields" FieldId="FactStartTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactStartTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCFFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactComFields" Name="UpdateWBSFactComFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskStateFields" FieldId="WBSState" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="WBSState" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+      </CustomFieldValueConfigs>
+    </ProjectConfig>
+    <ProjectConfig Name="ProjectFilePlan">
+      <USPS>
+        <!--读写相应信息的存储过程配置信息
+          1.AccessLevel：存储过程的访问类型，增删改查
+          2.USPName 存储过程名称
+          3.Name USP配置节点名，请确保全局唯一-->
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProject" Name="ReadProject">
+          <Fields>
+            <!--数据表字段与实体属性的对应关系 Name 数据表字段名 Property 实体的属性名称-->
+            <!--工程基本信息目前有且一个存储过程，来读取工程基本信息。
+              目前工程基本信息的只支持以下3个属性。修改Name属性对应数据库对应字段，请勿增加删除节点，或修改Property属性值-->
+            <Field Name="OrganizationID" Property="ID" />
+            <Field Name="ProjectCode" Property="Code" />
+            <Field Name="ProjectName" Property="Name" />
+          </Fields>
+        </USP>
+      </USPS>
+      <AccessLevelConfig>
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProjectAccess" Name="ReadProjectAccess">
+          <Fields>
+            <!--工程Id-->
+            <Field Name="OrganizationID" Property="ID" />
+            <!--工程访问权限-->
+            <Field Name="AccessLevel" Property="AccessLevel" />
+          </Fields>
+        </USP>
+      </AccessLevelConfig>
+      <!--任务在列表中显示标准属性列定义-->
+      <StandardFields>
+        <!--通过Header匹配列表中对应的列，PropName对应任务的属性名称-->
+        <StandardField PropName="TaskCode" Header="序号"/>
+        <StandardField PropName="WBSCode" Header="任务编号"/>
+        <StandardField PropName="Name" Header="任务名称" />
+        <StandardField PropName="Effort" Header="工期" />
+        <StandardField PropName="StartTime" Header="开始时间" />
+        <StandardField PropName="EndTime" Header="计划提交时间" />
+        <StandardField PropName="Dependencies" Header="前置任务" />
+        <StandardField PropName="Percent" Header="进度" />
+        <StandardField PropName="Resources" Header="资源" />
+      </StandardFields>
+      <CustomFields>
+        <!--FieldId自定义属性ID， 
+            FieldName 属性对应的列名
+            DataType 对应任务的属性数据类型，目前只支持：Text（文本），Numeric（数字），DateTime（日期）
+                     资源类型需要实现对应的资源读写配置-->
+        <CustomField FieldId="FactCompleteTime" FieldName="实际提资时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTimeOfAdjusted" FieldName="调整后计划提资时间" DataType="DateTime"/>
+        <CustomField FieldId="WBSState" FieldName="提交状态" DataType="Text"/>
+      </CustomFields>
+      <TaskConfigs>
+        <TaskConfig Name="FileTask">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadFileTasks"  Name="ReadFileTasks">
+              <!--标准属性数据库字段和任务属性名称对应关系，请勿修改Property属性-->
+              <Fields>
+                <Field Name="WBSID" Property="ID"/>
+                <Field Name="WBSName" Property="Name" />
+                <Field Name="WBSCode" Property="WBSCode" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime" />
+                <Field Name="Effort" Property="Effort" />
+                <Field Name="CompletePercent" Property="Percent" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+              <!--加载时显示的自定义列，目前只支持Read-->
+              <CustomFields>
+                <!--Name 数据库字段名
+                    Property 自定义属性的ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FactCompleteTimeOfAdjusted" />
+                <Field Name="FactCompleteTime" Property="FactCompleteTime" />
+                <Field Name="WBSState" Property="WBSState" />
+              </CustomFields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTasks" Name="UpdateWBSTasks">
+              <Fields>
+                <Field Name="WBSID" Property="ID" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime"  />
+                <!--<Field Name="CompletePercent" Property="Percent" />-->
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskConfig>
+      </TaskConfigs>
+      <WBSConfigs>
+        <WBSConfig Name="Specialty">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadSpecialWBS"  Name="ReadSpecialWBS">
+              <Fields>
+                <Field Name="ProjectSpecialtyID" Property="ID" PKValue="1" />
+                <Field Name="SpecialtyName" Property="Name" />
+                <Field Name="SpecialtyCode" Property="WBSCode" />
+                <Field Name="StartTime" Property="StartTime" />
+                <Field Name="EndTime" Property="EndTime" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+          </USPS>
+        </WBSConfig>
+      </WBSConfigs>
+      <!--任务关联数据读写配置，目前不支持多个数据来源，请用一张数据表存储任务关联信息-->
+      <TaskRelationConfigs>
+        <TaskRelationConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadTaskRelation" Name="ReadTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateTaskRelation" Name="UpdateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Create" USPName="P_GANTT_CreateTaskRelation" Name="CreateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+                <Field Name="OrganizationID" Property="ProjectId" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Delete" USPName="P_GANTT_DeleteTaskRelation" Name="DeleteTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskRelationConfig>
+      </TaskRelationConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <CustomFieldAccessConfigs>
+        <CustomFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadCustomFields" Name="ReadCustomFieldsAccess" >
+              <Fields>
+                <!--自定义属性ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FieldId" Property="FieldId" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldAccessConfig>
+      </CustomFieldAccessConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <StandardFieldAccessConfigs>
+        <StandardFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadStandardFields" Name="ReadStandardFieldsAccess" >
+              <Fields>
+                <!--标准属性属性名称，与当前工程自定义属性声明的StandardField PropName相对应-->
+                <Field Name="PropName" Property="PropertyName" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </StandardFieldAccessConfig>
+      </StandardFieldAccessConfigs>
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <CustomFieldValueConfigs>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFCTAFields" Name="UpdateWBSFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCFFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactComFields" Name="UpdateWBSFactComFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskStateFields" FieldId="WBSState" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="WBSState" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+      </CustomFieldValueConfigs>
+    </ProjectConfig>
+    <ProjectConfig Name="DeptProjectPlan">
+      <USPS>
+        <!--读写相应信息的存储过程配置信息
+          1.AccessLevel：存储过程的访问类型，增删改查
+          2.USPName 存储过程名称
+          3.Name USP配置节点名，请确保全局唯一-->
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadDeptInfo" Name="ReadDeptInfo">
+          <Fields>
+            <!--数据表字段与实体属性的对应关系 Name 数据表字段名 Property 实体的属性名称-->
+            <!--工程基本信息目前有且一个存储过程，来读取工程基本信息。
+              目前工程基本信息的只支持以下3个属性。修改Name属性对应数据库对应字段，请勿增加删除节点，或修改Property属性值-->
+            <Field Name="OrgUnitId" Property="ID" />
+            <Field Name="OrgUnitCode" Property="Code" />
+            <Field Name="OrgUnitName" Property="Name" />
+          </Fields>
+        </USP>
+      </USPS>
+      <AccessLevelConfig>
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProjectAccess" Name="ReadProjectAccess">
+          <Fields>
+            <!--工程Id-->
+            <Field Name="OrganizationID" Property="ID" />
+            <!--工程访问权限-->
+            <Field Name="AccessLevel" Property="AccessLevel" />
+          </Fields>
+        </USP>
+      </AccessLevelConfig>
+      <!--任务在列表中显示标准属性列定义-->
+      <StandardFields>
+        <!--通过Header匹配列表中对应的列，PropName对应任务的属性名称-->
+        <StandardField PropName="TaskCode" Header="序号"/>
+        <StandardField PropName="WBSCode" Header="任务编号"/>
+        <StandardField PropName="Name" Header="任务名称" />
+        <StandardField PropName="Effort" Header="工期" />
+        <StandardField PropName="StartTime" Header="开始时间" />
+        <StandardField PropName="EndTime" Header="结束时间" />
+        <StandardField PropName="Dependencies" Header="前置任务" />
+        <StandardField PropName="Percent" Header="进度" />
+        <StandardField PropName="Resources" Header="资源" />
+      </StandardFields>
+      <!--任务在列表中显示自定义属性列定义-->
+      <CustomFields>
+        <!--FieldId自定义属性ID， 
+            FieldName 属性对应的列名
+            DataType 对应任务的属性数据类型，目前只支持：Text（文本），Numeric（数字），DateTime（日期）
+                     资源类型需要实现对应的资源读写配置-->
+        <CustomField FieldId="PlanHandTime" FieldName="计划个人出手时间" DataType="DateTime"/>
+        <CustomField FieldId="PlanRecheckTime1" FieldName="计划室交出时间" DataType="DateTime"/>
+        <!--<CustomField FieldId="32119AD8-3C60-4741-859A-D660F5266206" FieldName="实际开始时间" DataType="DateTime"/>
+        <CustomField FieldId="7DAF2B8A-6490-47BD-8016-9A735D4DCE99" FieldName="实际结束时间" DataType="DateTime"/>-->
+      </CustomFields>
+      <TaskConfigs>
+        <TaskConfig Name="DeptWBSTask">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadDeptWBSInfo"  Name="ReadDeptWBSInfo">
+              <!--标准属性数据库字段和任务属性名称对应关系，请勿修改Property属性-->
+              <Fields>
+                <Field Name="WBSID" Property="ID"/>
+                <Field Name="WBSName" Property="Name" />
+                <Field Name="WBSCode" Property="WBSCode" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime" />
+                <Field Name="Effort" Property="Effort" />
+                <Field Name="CompletePercent" Property="Percent" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTasks" Name="UpdateWBSTasks">
+              <Fields>
+                <Field Name="WBSID" Property="ID" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime"  />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskConfig>
+      </TaskConfigs>
+      <WBSConfigs>
+        <WBSConfig Name="Specialty">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadDeptProjInfo"  Name="ReadDeptProjInfo">
+              <Fields>
+                <Field Name="ProjectSpecialtyID" Property="ID" PKValue="1" />
+                <Field Name="SpecialtyName" Property="Name" />
+                <Field Name="SpecialtyCode" Property="WBSCode" />
+                <Field Name="StartTime" Property="StartTime" />
+                <Field Name="EndTime" Property="EndTime" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+          </USPS>
+        </WBSConfig>
+      </WBSConfigs>
+      <!--任务关联数据读写配置，目前不支持多个数据来源，请用一张数据表存储任务关联信息-->
+      <TaskRelationConfigs>
+        <TaskRelationConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadTaskRelation" Name="ReadTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateTaskRelation" Name="UpdateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Create" USPName="P_GANTT_CreateTaskRelation" Name="CreateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+                <Field Name="OrganizationID" Property="ProjectId" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Delete" USPName="P_GANTT_DeleteTaskRelation" Name="DeleteTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskRelationConfig>
+      </TaskRelationConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <CustomFieldAccessConfigs>
+        <CustomFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadCustomFields" Name="ReadCustomFieldsAccess" >
+              <Fields>
+                <!--自定义属性ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FieldId" Property="FieldId" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldAccessConfig>
+      </CustomFieldAccessConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <StandardFieldAccessConfigs>
+        <StandardFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadStandardFields" Name="ReadStandardFieldsAccess" >
+              <Fields>
+                <!--标准属性属性名称，与当前工程自定义属性声明的StandardField PropName相对应-->
+                <Field Name="PropName" Property="PropertyName" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </StandardFieldAccessConfig>
+      </StandardFieldAccessConfigs>
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <CustomFieldValueConfigs>
+        <!--计划个人出手时间-->
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadDeptWBSTaskPHTFields" Name="ReadDeptWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPHTFields" Name="UpdateWBSTaskPHTFields" FieldId="PlanHandTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanHandTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadDeptWBSTaskPRTFields" Name="ReadDeptWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSTaskPRTFields" Name="UpdateWBSTaskPRTFields" FieldId="PlanRecheckTime1" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="PlanRecheckTime1" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+      </CustomFieldValueConfigs>
+    </ProjectConfig>
+    <ProjectConfig Name="EquipmentBidPlan">
+      <USPS>
+        <!--读写相应信息的存储过程配置信息
+          1.AccessLevel：存储过程的访问类型，增删改查
+          2.USPName 存储过程名称
+          3.Name USP配置节点名，请确保全局唯一-->
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProject" Name="ReadProject">
+          <Fields>
+            <!--数据表字段与实体属性的对应关系 Name 数据表字段名 Property 实体的属性名称-->
+            <!--工程基本信息目前有且一个存储过程，来读取工程基本信息。
+              目前工程基本信息的只支持以下3个属性。修改Name属性对应数据库对应字段，请勿增加删除节点，或修改Property属性值-->
+            <Field Name="OrganizationID" Property="ID" />
+            <Field Name="ProjectCode" Property="Code" />
+            <Field Name="ProjectName" Property="Name" />
+          </Fields>
+        </USP>
+      </USPS>
+      <AccessLevelConfig>
+        <USP AccessLevel="Read" USPName="P_GANTT_ReadProjectAccess" Name="ReadProjectAccess">
+          <Fields>
+            <!--工程Id-->
+            <Field Name="OrganizationID" Property="ID" />
+            <!--工程访问权限-->
+            <Field Name="AccessLevel" Property="AccessLevel" />
+          </Fields>
+        </USP>
+      </AccessLevelConfig>
+      <!--任务在列表中显示标准属性列定义-->
+      <StandardFields>
+        <!--通过Header匹配列表中对应的列，PropName对应任务的属性名称-->
+        <StandardField PropName="TaskCode" Header="序号"/>
+        <StandardField PropName="WBSCode" Header="任务编号"/>
+        <StandardField PropName="Name" Header="任务名称" />
+        <StandardField PropName="Effort" Header="工期" />
+        <StandardField PropName="StartTime" Header="开始时间" />
+        <StandardField PropName="EndTime" Header="结束时间" />
+        <StandardField PropName="Dependencies" Header="前置任务" />
+        <StandardField PropName="Percent" Header="进度" />
+        <StandardField PropName="Resources" Header="资源" />
+      </StandardFields>
+      <!--任务在列表中显示自定义属性列定义-->
+      <CustomFields>
+        <!--FieldId自定义属性ID， 
+            FieldName 属性对应的列名
+            DataType 对应任务的属性数据类型，目前只支持：Text（文本），Numeric（数字），DateTime（日期）
+                     资源类型需要实现对应的资源读写配置-->
+        <CustomField FieldId="FactCompleteTimeOfAdjusted" FieldName="调整后计划提交时间" DataType="DateTime"/>
+        <CustomField FieldId="FactCompleteTime" FieldName="实际提交时间" DataType="DateTime"/>
+        <CustomField FieldId="MasterDemandSchedule" FieldName="技术协议签订时间" DataType="DateTime"/>
+      </CustomFields>
+      <TaskConfigs>
+        <TaskConfig Name="EquipmentTask">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadEquipmentTasks"  Name="ReadEquipmentTasks">
+              <!--标准属性数据库字段和任务属性名称对应关系，请勿修改Property属性-->
+              <Fields>
+                <Field Name="WBSID" Property="ID"/>
+                <Field Name="WBSName" Property="Name" />
+                <Field Name="WBSCode" Property="WBSCode" />
+                <Field Name="PlanStartTime" Property="StartTime" />
+                <Field Name="PlanCompleteTime" Property="EndTime" />
+                <Field Name="Effort" Property="Effort" />
+                <Field Name="CompletePercent" Property="Percent" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+              <!--加载时显示的自定义列，目前只支持Read-->
+              <CustomFields>
+                <!--Name 数据库字段名
+                    Property 自定义属性的ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FactCompleteTimeOfAdjusted" />
+                <Field Name="FactCompleteTime" Property="FactCompleteTime" />
+                <Field Name="MasterDemandSchedule" Property="MasterDemandSchedule" />
+              </CustomFields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateFileTasks" Name="pdateFileTasks">
+              <Fields>
+                <Field Name="WBSID" Property="ID" />
+                <Field Name="PlanCompleteTime" Property="EndTime"  />
+                <!--<Field Name="CompletePercent" Property="Percent" />-->
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskConfig>
+      </TaskConfigs>
+      <WBSConfigs>
+        <WBSConfig Name="Specialty">
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadSpecialWBS"  Name="ReadSpecialWBS">
+              <Fields>
+                <Field Name="ProjectSpecialtyID" Property="ID" PKValue="1" />
+                <Field Name="SpecialtyName" Property="Name" />
+                <Field Name="SpecialtyCode" Property="WBSCode" />
+                <Field Name="StartTime" Property="StartTime" />
+                <Field Name="EndTime" Property="EndTime" />
+                <Field Name="ParentID" Property="ParentID" />
+              </Fields>
+            </USP>
+          </USPS>
+        </WBSConfig>
+      </WBSConfigs>
+      <!--任务关联数据读写配置，目前不支持多个数据来源，请用一张数据表存储任务关联信息-->
+      <TaskRelationConfigs>
+        <TaskRelationConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadTaskRelation" Name="ReadTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateTaskRelation" Name="UpdateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Create" USPName="P_GANTT_CreateTaskRelation" Name="CreateTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+                <Field Name="DependencyType" Property="Type" />
+                <Field Name="DelayDays" Property="DelayDays" />
+                <Field Name="OrganizationID" Property="ProjectId" />
+              </Fields>
+            </USP>
+            <USP AccessLevel="Delete" USPName="P_GANTT_DeleteTaskRelation" Name="DeleteTaskRelation" >
+              <Fields>
+                <Field Name="TaskId" Property="TaskId" />
+                <Field Name="RelatedTaskId" Property="StartTaskId" />
+              </Fields>
+            </USP>
+          </USPS>
+        </TaskRelationConfig>
+      </TaskRelationConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <CustomFieldAccessConfigs>
+        <CustomFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadCustomFields" Name="ReadCustomFieldsAccess" >
+              <Fields>
+                <!--自定义属性ID，与当前工程自定义属性声明的CustomField FieldId相对应-->
+                <Field Name="FieldId" Property="FieldId" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldAccessConfig>
+      </CustomFieldAccessConfigs>
+      <!--自定义属性列权限配置，只读，请勿修改Property属性-->
+      <StandardFieldAccessConfigs>
+        <StandardFieldAccessConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadStandardFields" Name="ReadStandardFieldsAccess" >
+              <Fields>
+                <!--标准属性属性名称，与当前工程自定义属性声明的StandardField PropName相对应-->
+                <Field Name="PropName" Property="PropertyName" />
+                <!--相应权限-->
+                <Field Name="AccessLevel" Property="AccessLevel" />
+              </Fields>
+            </USP>
+          </USPS>
+        </StandardFieldAccessConfig>
+      </StandardFieldAccessConfigs>
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <!--自定义属性值读写配置，每个自定义属性需要配置读取和更新的存储过程-->
+      <CustomFieldValueConfigs>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFCTAFields" Name="UpdateWBSFCTAFields" FieldId="FactCompleteTimeOfAdjusted" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTimeOfAdjusted" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskFCFFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSFactComFields" Name="UpdateWBSFactComFields" FieldId="FactCompleteTime" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="FactCompleteTime" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+        <CustomFieldValueConfig>
+          <USPS>
+            <USP AccessLevel="Read" USPName="P_GANTT_ReadWBSTaskCustomerFields" Name="ReadWBSTaskMSDFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="OrganizationId" Property="ProjectId" />
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+            <USP AccessLevel="Update" USPName="P_GANTT_UpdateWBSMDSFields" Name="UpdateWBSMDSFields" FieldId="MasterDemandSchedule" >
+              <Fields >
+                <Field Name="WBSID" Property="TaskId" />
+                <Field Name="MasterDemandSchedule" Property="FieldValue"/>
+              </Fields>
+            </USP>
+          </USPS>
+        </CustomFieldValueConfig>
+      </CustomFieldValueConfigs>
+    </ProjectConfig>
+  </ProjectConfigs>
+</DataConfigs>

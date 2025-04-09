@@ -1,0 +1,30 @@
+/* CSS Document */
+
+/*查询条件新加样式*/
+.ddlist .ddlcontent{ padding:5px;width:550px;overflow:auto;max-height:200px;}
+.ddlist .ddlclass{ vertical-align:top; border-right:#ddd 1px dotted;}
+.ddlist .ddlctr{ border-bottom:#ddd 1px dotted;}
+
+
+
+/*查询条件新加样式*/
+a.searchbtn{ display:inline-block; margin:0px 4px; text-align:center; color:#a9adb6!important; text-decoration:underline; }
+a.searchbtn:hover{ color:#e17009!important;}
+.seniorsearch img{}
+.ddl {background:#fff;position:relative;display:inline-block;z-index:100000; float:left;}
+.ddltitle {border:#ddd 1px solid;display:inline-block;background:#fff url(../images/ddl.gif) right center no-repeat;
+height:25px;padding:0px 20px 0px 6px;line-height:25px;z-index:1;}
+.ddltitlenobor {border-color:#e17009; border-bottom-color:#fff;}
+.ddltitlesel {background-color:#ffb;}
+.ddlist {background:#fff;position:absolute;top:26px; display:none; left:0px;border:#e17009 1px solid;z-index:-1;}
+.ddlist .kpms-chklist{ width:100%;}
+.ddlist .kpms-chklist input{border:none;}
+.ddlbtn { position:absolute; right:10px; top:4px;}
+.ddltextbox { height:25px;padding:4px 4px 0px 10px;}
+.ddltextbox input { background:url(../images/search.jpg) left center no-repeat;background-color:#fff;border:#dbdfe6 1px solid; border-top-color:#abadb3; border-bottom-color:#e3e9ef;  padding-left:20px;}
+
+.twobox {position:relative;z-index:1; text-align:center; float:left;}
+.twobox input {z-index:1;background-color:#fff!important;border:#dbdfe6 1px solid; border-top-color:#abadb3; border-bottom-color:#e3e9ef; }
+.twoboxbtn {display:none;height:25px;background:#fff;z-index:-1;border:#ccc 1px solid;position:absolute;top:-8px;padding:5px;
+            right:-55px;left:-5px;}
+.twoboxbtn a {float:right;}
